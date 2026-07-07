@@ -22,7 +22,7 @@
       "label": "Asset",
       "type": "asset",
       "default": "suse/logo/hor-pos-green",
-      "help": "The asset to render — a catalog id (see `brand-tool assets`) or a pasted lolly.tools tool link. Vector assets stay vector through SVG/PDF; raster assets embed as images."
+      "help": "The asset to render — a catalog id (see `lolly assets`) or a pasted lolly.tools tool link. Vector assets stay vector through SVG/PDF; raster assets embed as images."
     },
     {
       "id": "fit",
