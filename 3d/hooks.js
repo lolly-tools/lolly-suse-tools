@@ -6,10 +6,9 @@
 // renderer reads it. Mirrors tools/d3/hooks.js.
 
 function safeJson(obj) {
-  return JSON.stringify(obj)
-    .replace(/</g, '\\u003c')
-    .replace(/ /g, '\\u2028')
-    .replace(/ /g, '\\u2029');
+  // Only < needs escaping for safe embedding in <script type="application/json">;
+  // JSON.parse handles U+2028/U+2029 natively, so no separator escaping needed.
+  return JSON.stringify(obj).replace(/</g, "\\u003c");
 }
 
 function num(v, fallback) {
@@ -55,19 +54,21 @@ function compute(model) {
     fps: Math.round(num(inp.fps, 30)),
     loop: inp.loop !== false,
     easing: inp.easing || 'ease-in-out',
-    keyframes: Array.isArray(inp.cameraKeyframes)
-      ? inp.cameraKeyframes.map(function (k) {
-          return {
-            time: num(k.time, 0),
-            fov: num(k.fov, 45),
-            rotation: num(k.rotation, 0),
-            zoom: num(k.zoom, 1),
-            pan: num(k.pan, 0),
-            tilt: num(k.tilt, 12),
-            easing: k.easing || 'ease-in-out',
-          };
-        })
-      : [],
+    // Sorted by time: the template's keyframe sampler assumes ascending times
+    // (a user can add rows in any order), so a negative/zero span can't freeze it.
+    keyframes: (Array.isArray(inp.cameraKeyframes) ? inp.cameraKeyframes : [])
+      .map(function (k) {
+        return {
+          time: num(k.time, 0),
+          fov: num(k.fov, 45),
+          rotation: num(k.rotation, 0),
+          zoom: num(k.zoom, 1),
+          pan: num(k.pan, 0),
+          tilt: num(k.tilt, 12),
+          easing: k.easing || 'ease-in-out',
+        };
+      })
+      .sort(function (a, b) { return a.time - b.time; }),
     playClip: inp.playClip !== false,
     clipIndex: Math.max(0, Math.round(num(inp.clipIndex, 0))),
     applyTint: inp.applyTint === true,
