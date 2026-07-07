@@ -126,12 +126,17 @@ function alignedY(segY, segH, textSize, align) {
 function resolveItems(raw) {
   const arr = Array.isArray(raw) ? raw : [];
   return arr.map((row, i) => {
-    const label  = (row.label || '').trim() || `Item ${i+1}`;
-    const value  = parseFloat(row.value) || 0;
-    const rawCol = (row.color || '').trim();
-    const color  = isValidHex(rawCol) ? rawCol : BRAND[i % BRAND.length];
-    return { label, value, color };
-  }).filter(r => r.label || r.value);
+    const r      = row || {};
+    const rawLabel = (r.label || '').trim();
+    const value    = parseFloat(r.value) || 0;
+    const rawCol   = (r.color || '').trim();
+    const color    = isValidHex(rawCol) ? rawCol : BRAND[i % BRAND.length];
+    return { rawLabel, value, color };
+  })
+    // Drop entirely-empty rows BEFORE defaulting the label, otherwise an unfilled
+    // block always passes the filter and renders a phantom "Item N" segment.
+    .filter(r => r.rawLabel || r.value)
+    .map((r, i) => ({ label: r.rawLabel || `Item ${i+1}`, value: r.value, color: r.color }));
 }
 
 // ── layout ───────────────────────────────────────────────────────────────────

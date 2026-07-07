@@ -282,6 +282,10 @@ let _initDone = false, _lastW = null, _lastH = null;
 // behind; otherwise we only touch a field that's empty, holds our last value, or
 // still shows the manifest placeholder — so manual/URL dims and presets stick.
 function syncExportDims(w, h, force) {
+  // Shell-private DOM (export fields, #tool-canvas, canvas-resize) only exists on
+  // web. Off-web (CLI/Tauri) there's nothing to sync — the render already returns
+  // the lockup's natural w/h as a sensible default, so just no-op gracefully.
+  if (typeof document === 'undefined' || !document.querySelector) return;
   const wIn = document.querySelector('[data-action="export-width"]');
   const hIn = document.querySelector('[data-action="export-height"]');
   if (!wIn || !hIn) return;
@@ -327,6 +331,7 @@ function layoutFor(orientation, category) {
 
 // Show the Location row only for the types that use it.
 function toggleLocationRow(category) {
+  if (typeof document === 'undefined' || !document.querySelector) return;
   const ctrl = document.querySelector('[data-input-id="location"]');
   const row = ctrl && ctrl.closest('.input-row');
   if (row) row.style.display = HAS_LOCATION(category) ? '' : 'none';

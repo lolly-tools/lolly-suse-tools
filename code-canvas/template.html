@@ -47,6 +47,11 @@
 .cc-code {
   flex: 1; min-width: 0;
   padding: 20px 24px;
+  /* Restate the stack ON the <pre>: the UA `pre{font-family:monospace}` rule matches
+     the element directly and beats the stack inherited from .cc-root, so without this
+     the code renders in a generic monospace AND the SVG export can't outline it to
+     <path> (computed family lacks 'SUSE', so resolveSuseFontUrl bails → <text>). */
+  font-family: 'SUSE Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', monospace;
   font-size: 13px; line-height: 1.7;
   white-space: pre;
   overflow: hidden;

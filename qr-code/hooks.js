@@ -218,6 +218,21 @@ QRCode.prototype.svg = function(opt) {
 // Module-level flag so beforeExport can read the last known transparent state.
 var _transparentBg = false;
 
+function _esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// A visible placeholder when the content can't be encoded (e.g. "Content too
+// long"). Without this the throw propagates out of compute(), onInput swallows
+// it, and the QR silently blanks with no explanation.
+function _errorSvg(note) {
+  return '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="0 0 600 600">'
+    + '<rect x="0" y="0" width="600" height="600" fill="#fff5f5"/>'
+    + '<text x="300" y="286" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="700" fill="#bd3314">QR code unavailable</text>'
+    + '<text x="300" y="326" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#0c322c">' + _esc(note) + '</text>'
+    + '</svg>';
+}
+
 // One-entry memo: building the matrix + 8-pass mask search is O(n²)×8 per call,
 // so cache the last result keyed on the input JSON. An unchanged input (e.g. a
 // re-render that didn't touch any field) returns the cached SVG without rebuilding.
@@ -232,20 +247,32 @@ function compute(args) {
   if (key === _memoKey) return _memoResult;
 
   var content = (typeof args.url === 'string' && args.url.trim()) ? args.url.trim() : 'https://www.suse.com';
-  var qr = new QRCode({
-    content:    content,
-    color:      args.color || '#0c322c',
-    background: _transparentBg ? 'none' : (args.background || '#ffffff'),
-    ecl:        args.ecl || 'M',
-    padding:    Number.isFinite(Number(args.padding)) ? Math.max(0, Math.round(Number(args.padding))) : 4,
-    join:       Boolean(args.join),
-    width:      600,
-    height:     600,
-    pretty:     false,
-  });
+
+  var result;
+  try {
+    var qr = new QRCode({
+      content:    content,
+      color:      args.color || '#0c322c',
+      background: _transparentBg ? 'none' : (args.background || '#ffffff'),
+      ecl:        args.ecl || 'M',
+      padding:    Number.isFinite(Number(args.padding)) ? Math.max(0, Math.round(Number(args.padding))) : 4,
+      join:       Boolean(args.join),
+      width:      600,
+      height:     600,
+      pretty:     false,
+    });
+    result = { svgContent: qr.svg({ container: 'svg-viewbox' }), qrError: '' };
+  } catch (err) {
+    var msg = (err && err.message) ? err.message : 'Could not generate QR code';
+    var note = /too long|overflow/i.test(msg)
+      ? 'Content is too long for a QR code — shorten the text or URL, or lower the error-correction level.'
+      : msg;
+    // qrError is surfaced to the template/UI; svgContent renders the note in-place.
+    result = { svgContent: _errorSvg(note), qrError: note };
+  }
 
   _memoKey = key;
-  _memoResult = { svgContent: qr.svg({ container: 'svg-viewbox' }) };
+  _memoResult = result;
   return _memoResult;
 }
 

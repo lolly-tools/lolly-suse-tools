@@ -36,6 +36,11 @@ var PROMO_MAX_H = 200;
 
 function resizeImage(assetRef, maxW, maxH) {
   if (!assetRef || !assetRef.url) return Promise.resolve('');
+  // Headless shells (CLI/Tauri) have no Image/canvas — skip the image-derived
+  // bit gracefully so the rest of the patch (palette, logo, append) still lands.
+  if (typeof document === 'undefined' || typeof Image === 'undefined' || !document.createElement) {
+    return Promise.resolve('');
+  }
   return new Promise(function(resolve) {
     var img = new Image();
     img.onload = function() {

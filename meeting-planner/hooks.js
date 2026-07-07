@@ -1,6 +1,6 @@
 function compute(inputs) {
   const people = Array.isArray(inputs.people) ? inputs.people : [];
-  const active = people.filter(p => (p.city || '').trim());
+  const active = people.filter(p => p && (p.city || '').trim());
   const showNight     = inputs.showNight     !== false;
   const showGraticule = inputs.showGraticule !== false;
   const showBorders   = inputs.showBorders   !== false;
