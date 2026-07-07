@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1280" width="1280" height="1280" role="img" aria-label="3D model on a studio stage">
+  <defs>
+    <radialGradient id="stage" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#22303a"/>
+      <stop offset="60%" stop-color="#141b21"/>
+      <stop offset="100%" stop-color="#0b0f13"/>
+    </radialGradient>
+    <linearGradient id="topFace" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5be59b"/>
+      <stop offset="100%" stop-color="#30ba78"/>
+    </linearGradient>
+    <linearGradient id="leftFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#249e64"/>
+      <stop offset="100%" stop-color="#177049"/>
+    </linearGradient>
+    <linearGradient id="rightFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c8757"/>
+      <stop offset="100%" stop-color="#0f5738"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="1280" fill="url(#stage)"/>
+
+  <!-- contact shadow -->
+  <ellipse cx="640" cy="880" rx="330" ry="70" fill="url(#shadow)"/>
+
+  <!-- turntable orbit hint -->
+  <ellipse cx="640" cy="880" rx="360" ry="96" fill="none" stroke="#30ba78" stroke-opacity="0.35" stroke-width="3" stroke-dasharray="14 18"/>
+
+  <!-- isometric low-poly cube (reads as a 3D mesh) -->
+  <g>
+    <!-- top -->
+    <polygon points="640,360 862,486 640,612 418,486" fill="url(#topFace)"/>
+    <!-- left -->
+    <polygon points="418,486 640,612 640,868 418,742" fill="url(#leftFace)"/>
+    <!-- right -->
+    <polygon points="862,486 640,612 640,868 862,742" fill="url(#rightFace)"/>
+    <!-- facet wireframe to suggest a mesh -->
+    <g stroke="#eafff4" stroke-opacity="0.28" stroke-width="2" fill="none" stroke-linejoin="round">
+      <path d="M640,360 640,612 M418,486 640,612 862,486"/>
+      <path d="M529,423 529,678 M751,423 751,678"/>
+      <path d="M418,614 640,740 862,614"/>
+    </g>
+  </g>
+
+  <!-- key-light glint -->
+  <circle cx="560" cy="450" r="22" fill="#ffffff" fill-opacity="0.18"/>
+</svg>
