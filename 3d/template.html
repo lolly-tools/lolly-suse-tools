@@ -193,12 +193,16 @@
       renderer.render(scene, camera);
     }
 
+    var resumeAfterDrive = false;
     function loop() {
       if (disposed || !alive()) return;
       // While the exporter drives deterministic frames, stop advancing on wall-clock
       // (that would clobber the exact phase between the sync paint and async capture);
       // keep the loop alive so it resumes once the flag clears.
-      if (window.__lollyFrameDriven) { raf = requestAnimationFrame(loop); return; }
+      if (canvas.__lollyFrameDriven) { raf = requestAnimationFrame(loop); return; }
+      // First frame after a driven export: swallow the accumulated pause span so the
+      // preview doesn't snap forward by the whole export duration.
+      if (resumeAfterDrive) { clock.getDelta(); resumeAfterDrive = false; }
       var dt = clock.getDelta();
       if (mixer) mixer.update(dt);
       renderFrame(clock.getElapsedTime());
@@ -206,21 +210,22 @@
     }
 
     // Opt into the deterministic export-frame clock (shells export bridge): render an
-    // exact frame at normalized loop time t∈[0,1) → seconds. Makes gif/apng + stills
+    // exact frame at normalized loop time t∈[0,1) → seconds. Stored ON THE CANVAS
+    // (per-node) so it can't leak across tool navigation. Makes gif/apng + stills
     // capture a clean, reproducible turntable instead of a random wall-clock frame.
     var myFrameRender = function (t01) {
       if (!alive()) return;
+      resumeAfterDrive = true;   // clock reset owed once wall-clock playback resumes
       var secs = (t01 || 0) * cfg.duration;
       if (mixer) { try { mixer.setTime(secs); } catch (e) {} }
       renderFrame(secs);
     };
-    window.__lollyFrameRender = myFrameRender;
+    canvas.__lollyFrameRender = myFrameRender;
 
     window.__lolly3d = {
       dispose: function () {
         disposed = true;
         if (raf) cancelAnimationFrame(raf);
-        if (window.__lollyFrameRender === myFrameRender) window.__lollyFrameRender = null;
         try { if (mixer) mixer.stopAllAction(); } catch (e) {}
         try { pmrem.dispose(); } catch (e) {}
         try { renderer.dispose(); } catch (e) {}
