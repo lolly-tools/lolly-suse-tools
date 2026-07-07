@@ -1,0 +1,7 @@
+<svg class="ax-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+  {{!-- Oversized so it fills any output aspect: with the root's "meet" the 1000 viewBox
+        is letterboxed, and this rect extends well past it into the margins (the outer
+        SVG clips at the viewport). --}}
+  {{#unless transparentBg}}<rect x="-12000" y="-12000" width="26000" height="26000" fill="{{background}}"/>{{/unless}}
+  {{#if src}}<image href="{{asset src}}" x="0" y="0" width="1000" height="1000" preserveAspectRatio="{{#if (eq fit "cover")}}xMidYMid slice{{else}}xMidYMid meet{{/if}}"/>{{/if}}
+</svg>

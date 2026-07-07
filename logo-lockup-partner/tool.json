@@ -1,0 +1,214 @@
+{
+  "id": "logo-lockup-partner",
+  "name": "Logo Lockup: Partner",
+  "description": "The SUSE logo beside a partner's, with a divider between — light or dark.",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "status": "official",
+  "category": "designer",
+  "tags": ["logo", "lockup", "partner", "co-brand", "brand", "suse", "partnership", "sponsor", "powered-by", "on-device"],
+  "a11yLabel": "SUSE partner lockup with {{partners.length}} partner logos",
+  "examples": [
+    { "label": "Light · full colour · bar", "values": { "theme": "light", "leadTreatment": "colour", "layout": "row", "connector": "bar", "size": 130, "gap": 56, "balance": true } },
+    { "label": "Dark · mono · × symbol", "values": { "theme": "dark", "leadTreatment": "mono", "layout": "row", "connector": "symbol", "symbol": "times", "size": 120, "gap": 64 } },
+    { "label": "Light · powered by · large lead", "values": { "theme": "light", "leadTreatment": "colour", "layout": "lead", "connector": "text", "connectorText": "powered by", "leadPresence": "large", "size": 140, "gap": 72 } },
+    { "label": "Dark · in partnership with", "values": { "theme": "dark", "leadTreatment": "colour", "layout": "row", "connector": "text", "connectorText": "in partnership with", "size": 110, "gap": 60 } },
+    { "label": "Light · plus · hero lead", "values": { "theme": "light", "leadTreatment": "colour", "layout": "lead", "connector": "symbol", "symbol": "plus", "leadPresence": "hero", "partnerDivider": "bar", "size": 150, "gap": 80 } },
+    { "label": "Dark · mono · spacing only", "values": { "theme": "dark", "leadTreatment": "mono", "layout": "row", "connector": "none", "size": 120, "gap": 96, "balance": false } }
+  ],
+  "render": {
+    "width": 1200,
+    "height": 360,
+    "formats": ["svg", "png", "pdf", "dxf", "jpg", "webp"],
+    "actions": ["copy", "download", "save"],
+    "layout": "sidebar",
+    "transparentBg": false,
+    "convertPaths": true
+  },
+  "hooks": {
+    "onInit": true,
+    "onInput": true,
+    "beforeExport": true
+  },
+  "inputs": [
+    {
+      "id": "theme",
+      "label": "Theme",
+      "type": "select",
+      "default": "light",
+      "help": "Light puts dark logos on a light background; dark flips it. The SUSE logo switches to the matching on-light / on-dark artwork automatically.",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark" }
+      ]
+    },
+    {
+      "id": "lead",
+      "label": "Lead logo",
+      "type": "asset",
+      "assetType": "any",
+      "allowUpload": true,
+      "default": { "id": "suse/logo/hor-pos-green" },
+      "help": "Defaults to the SUSE logo, which follows the theme. Swap it for your own to lead with a different brand."
+    },
+    {
+      "id": "leadTreatment",
+      "label": "Lead colour",
+      "type": "select",
+      "default": "colour",
+      "help": "Full colour keeps the SUSE chameleon green; monochrome uses the one-colour SUSE mark (black on light, white on dark). For your own lead logo, monochrome desaturates it.",
+      "options": [
+        { "value": "colour", "label": "Full colour" },
+        { "value": "mono", "label": "Monochrome" }
+      ]
+    },
+    {
+      "id": "leadPresence",
+      "label": "Lead presence",
+      "type": "select",
+      "default": "normal",
+      "help": "How prominent the lead logo is, on top of any balancing. Use Large / Hero (or the extreme tiers) for a clear host (“powered by”) hierarchy. The whole lockup still scales to fit the artboard, so these set relative prominence.",
+      "options": [
+        { "value": "xxlarge", "label": "Huge" },
+        { "value": "xlarge", "label": "Extra large" },
+        { "value": "hero", "label": "Hero" },
+        { "value": "large", "label": "Large" },
+        { "value": "normal", "label": "Normal" },
+        { "value": "small", "label": "Small" },
+        { "value": "xsmall", "label": "Extra small" },
+        { "value": "xxsmall", "label": "Tiny" }
+      ]
+    },
+    {
+      "id": "layout",
+      "label": "Layout",
+      "type": "select",
+      "default": "row",
+      "help": "Even row keeps every logo on one line. Lead + partners emphasises the lead and lets the partners wrap into a tidy group beside it.",
+      "options": [
+        { "value": "row", "label": "Even row" },
+        { "value": "lead", "label": "Lead + partners" }
+      ]
+    },
+    {
+      "id": "connector",
+      "label": "Connector",
+      "type": "select",
+      "default": "bar",
+      "help": "What sits between the lead and the partner(s).",
+      "options": [
+        { "value": "bar", "label": "Vertical bar" },
+        { "value": "symbol", "label": "Symbol" },
+        { "value": "text", "label": "Text" },
+        { "value": "none", "label": "Nothing (spacing only)" }
+      ]
+    },
+    {
+      "id": "symbol",
+      "label": "Symbol",
+      "type": "select",
+      "default": "times",
+      "showIf": { "connector": "symbol" },
+      "options": [
+        { "value": "times", "label": "× (times)" },
+        { "value": "plus", "label": "+ (plus)" },
+        { "value": "amp", "label": "& (and)" }
+      ]
+    },
+    {
+      "id": "connectorText",
+      "label": "Connector text",
+      "type": "text",
+      "default": "in partnership with",
+      "showIf": { "connector": "text" },
+      "help": "e.g. “in partnership with”, “powered by”, “×”."
+    },
+    {
+      "id": "connectorWeight",
+      "label": "Connector text weight",
+      "type": "number",
+      "display": "slider",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500,
+      "showIf": { "connector": "text" },
+      "help": "Font weight of the connector text (100 Thin → 900 Black)."
+    },
+    {
+      "id": "partnerDivider",
+      "label": "Between partners",
+      "type": "select",
+      "default": "none",
+      "help": "Put a vertical bar between each partner logo. Applies once there are two or more partners.",
+      "options": [
+        { "value": "none", "label": "Nothing (spacing only)" },
+        { "value": "bar", "label": "Vertical bar" }
+      ]
+    },
+    {
+      "id": "size",
+      "label": "Logo size",
+      "type": "number",
+      "display": "slider",
+      "min": 40,
+      "max": 220,
+      "step": 2,
+      "default": 120,
+      "help": "Base height of the logos. Balancing and each logo's presence scale from here."
+    },
+    {
+      "id": "gap",
+      "label": "Spacing",
+      "type": "number",
+      "display": "slider",
+      "min": 8,
+      "max": 200,
+      "step": 2,
+      "default": 56,
+      "help": "Space around the connector and between partner logos."
+    },
+    {
+      "id": "balance",
+      "label": "Balance sizes",
+      "type": "boolean",
+      "default": true,
+      "help": "Auto-size each logo by its optical weight so the lead and partners read as equally prominent. Each logo's presence still applies on top. Turn off for equal-height logos."
+    },
+    {
+      "id": "partners",
+      "label": "Partners",
+      "type": "blocks",
+      "labelledFields": true,
+      "dropToAdd": { "field": "logo", "accept": "image/*" },
+      "fields": [
+        { "id": "logo", "label": "Partner logo", "type": "asset", "assetType": "any", "allowUpload": true },
+        { "id": "presence", "label": "Presence", "type": "select", "default": "normal",
+          "help": "How prominent this partner is, on top of any balancing. The extreme tiers (Huge … Tiny) let one logo dominate or recede; the whole lockup still scales to fit the artboard.",
+          "options": [
+            { "value": "xxlarge", "label": "Huge" },
+            { "value": "xlarge", "label": "Extra large" },
+            { "value": "hero", "label": "Hero" },
+            { "value": "large", "label": "Large" },
+            { "value": "normal", "label": "Normal" },
+            { "value": "small", "label": "Small" },
+            { "value": "xsmall", "label": "Extra small" },
+            { "value": "xxsmall", "label": "Tiny" }
+          ] },
+        { "id": "filter", "label": "Treatment", "type": "select", "default": "none",
+          "help": "Even out a mismatched partner logo: grayscale or desaturate drop its colour, brighten lifts a dull mark, darken tames a washed-out one, invert rescues a dark logo on a dark theme, and ink knocks it back to a solid one-colour silhouette in the theme's ink. Bitmap logos keep the treatment in every format; an SVG-file logo keeps it in PNG only.",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "grayscale", "label": "Grayscale" },
+            { "value": "desaturate", "label": "Desaturate" },
+            { "value": "brighten", "label": "Brighten" },
+            { "value": "darken", "label": "Darken" },
+            { "value": "invert", "label": "Invert" },
+            { "value": "ink", "label": "Convert to ink" }
+          ] },
+        { "id": "opacity", "label": "Opacity", "type": "number", "display": "slider", "min": 0.1, "max": 1, "step": 0.05, "default": 1 }
+      ],
+      "default": []
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-label="Diagram Builder preview — an org chart of connected cards">
+  <title>Diagram Builder</title>
+  <style>
+    .lbl{font-family:'SUSE','SUSE Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;}
+    .mono{font-family:'SUSE Mono',ui-monospace,Menlo,monospace;}
+
+    /* traveling signal packets flowing outward along the connectors */
+    .pulse{stroke-dasharray:7 47;animation:flow 1.5s linear infinite;}
+    @keyframes flow{to{stroke-dashoffset:-54;}}
+
+    /* a highlight that walks from card to card as if the tree is being built */
+    .glow{opacity:0;animation:nodeGlow 7.2s ease-in-out infinite;}
+    .g0{animation-delay:0s;}   .g1{animation-delay:1.2s;}
+    .g2{animation-delay:2.4s;} .g3{animation-delay:3.6s;}
+    .g4{animation-delay:4.8s;} .g5{animation-delay:6.0s;}
+    @keyframes nodeGlow{0%{opacity:0}5%{opacity:1}12%{opacity:1}18%{opacity:0}100%{opacity:0}}
+
+    .caret{animation:blink 1.05s steps(1) infinite;}
+    @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+    @media (prefers-reduced-motion:reduce){
+      .pulse{animation:none;}
+      .glow{animation:none;opacity:0;}
+      .caret{animation:none;opacity:1;}
+    }
+  </style>
+
+  <!-- ground -->
+  <rect width="1600" height="1000" fill="#0c322c"/>
+  <defs>
+    <pattern id="dots" width="64" height="64" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="2.2" fill="#90ebcd" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#dots)"/>
+
+  <!-- connectors (solid, fully drawn base state) -->
+  <g fill="none" stroke="#90ebcd" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M800,224 V322 M380,322 H1220 M380,322 V420 M800,322 V420 M1220,322 V420
+             M800,524 V612 M640,612 H960 M640,612 V700 M960,612 V700"/>
+  </g>
+  <!-- connectors (persimmon packets traveling along the spines) -->
+  <path class="pulse" fill="none" stroke="#fe7c3f" stroke-width="4" stroke-linecap="round"
+        d="M800,224 V322 M380,322 H1220 M380,322 V420 M800,322 V420 M1220,322 V420
+           M800,524 V612 M640,612 H960 M640,612 V700 M960,612 V700"/>
+
+  <!-- junction nodes -->
+  <g fill="#0c322c" stroke="#90ebcd" stroke-width="3">
+    <circle cx="800" cy="322" r="5"/>
+    <circle cx="380" cy="322" r="5"/>
+    <circle cx="1220" cy="322" r="5"/>
+    <circle cx="800" cy="612" r="5"/>
+  </g>
+
+  <!-- ============ CARDS ============ -->
+  <!-- card template: shadow, surface, glow accent, avatar, title, subtitle -->
+
+  <!-- Root: CEO -->
+  <g>
+    <rect x="675" y="126" width="250" height="104" rx="16" fill="#06231e" opacity="0.5"/>
+    <rect x="675" y="120" width="250" height="104" rx="16" fill="#103b32" stroke="#90ebcd" stroke-width="2.5"/>
+    <rect class="glow g0" x="675" y="120" width="250" height="104" rx="16" fill="none" stroke="#fe7c3f" stroke-width="3"/>
+    <g transform="translate(693,144)">
+      <rect width="56" height="56" rx="13" fill="#30ba78"/>
+      <circle cx="28" cy="22" r="9" fill="#0c322c"/>
+      <path d="M13 50 C13 34 43 34 43 50 Z" fill="#0c322c"/>
+    </g>
+    <text class="lbl" x="767" y="167" font-size="22" font-weight="700" fill="#ffffff">CEO</text>
+    <rect x="767" y="182" width="118" height="9" rx="4.5" fill="#90ebcd" opacity="0.5"/>
+  </g>
+
+  <!-- Row 2 -->
+  <!-- CTO -->
+  <g>
+    <rect x="255" y="426" width="250" height="104" rx="16" fill="#06231e" opacity="0.5"/>
+    <rect x="255" y="420" width="250" height="104" rx="16" fill="#103b32" stroke="#90ebcd" stroke-width="2.5"/>
+    <rect class="glow g1" x="255" y="420" width="250" height="104" rx="16" fill="none" stroke="#fe7c3f" stroke-width="3"/>
+    <g transform="translate(273,444)">
+      <rect width="56" height="56" rx="13" fill="#30ba78"/>
+      <circle cx="28" cy="22" r="9" fill="#0c322c"/>
+      <path d="M13 50 C13 34 43 34 43 50 Z" fill="#0c322c"/>
+    </g>
+    <text class="lbl" x="347" y="467" font-size="22" font-weight="700" fill="#ffffff">CTO</text>
+    <rect x="347" y="482" width="104" height="9" rx="4.5" fill="#90ebcd" opacity="0.5"/>
+  </g>
+  <!-- COO -->
+  <g>
+    <rect x="675" y="426" width="250" height="104" rx="16" fill="#06231e" opacity="0.5"/>
+    <rect x="675" y="420" width="250" height="104" rx="16" fill="#103b32" stroke="#90ebcd" stroke-width="2.5"/>
+    <rect class="glow g2" x="675" y="420" width="250" height="104" rx="16" fill="none" stroke="#fe7c3f" stroke-width="3"/>
+    <g transform="translate(693,444)">
+      <rect width="56" height="56" rx="13" fill="#30ba78"/>
+      <circle cx="28" cy="22" r="9" fill="#0c322c"/>
+      <path d="M13 50 C13 34 43 34 43 50 Z" fill="#0c322c"/>
+    </g>
+    <text class="lbl" x="767" y="467" font-size="22" font-weight="700" fill="#ffffff">COO</text>
+    <rect x="767" y="482" width="118" height="9" rx="4.5" fill="#90ebcd" opacity="0.5"/>
+  </g>
+  <!-- CFO -->
+  <g>
+    <rect x="1095" y="426" width="250" height="104" rx="16" fill="#06231e" opacity="0.5"/>
+    <rect x="1095" y="420" width="250" height="104" rx="16" fill="#103b32" stroke="#90ebcd" stroke-width="2.5"/>
+    <rect class="glow g3" x="1095" y="420" width="250" height="104" rx="16" fill="none" stroke="#fe7c3f" stroke-width="3"/>
+    <g transform="translate(1113,444)">
+      <rect width="56" height="56" rx="13" fill="#30ba78"/>
+      <circle cx="28" cy="22" r="9" fill="#0c322c"/>
+      <path d="M13 50 C13 34 43 34 43 50 Z" fill="#0c322c"/>
+    </g>
+    <text class="lbl" x="1187" y="467" font-size="22" font-weight="700" fill="#ffffff">CFO</text>
+    <rect x="1187" y="482" width="96" height="9" rx="4.5" fill="#90ebcd" opacity="0.5"/>
+  </g>
+
+  <!-- Row 3 (grandchildren under COO) -->
+  <!-- Eng Lead -->
+  <g>
+    <rect x="515" y="706" width="250" height="104" rx="16" fill="#06231e" opacity="0.5"/>
+    <rect x="515" y="700" width="250" height="104" rx="16" fill="#103b32" stroke="#90ebcd" stroke-width="2.5"/>
+    <rect class="glow g4" x="515" y="700" width="250" height="104" rx="16" fill="none" stroke="#fe7c3f" stroke-width="3"/>
+    <g transform="translate(533,724)">
+      <rect width="56" height="56" rx="13" fill="#90ebcd"/>
+      <circle cx="28" cy="22" r="9" fill="#0c322c"/>
+      <path d="M13 50 C13 34 43 34 43 50 Z" fill="#0c322c"/>
+    </g>
+    <text class="lbl" x="607" y="742" font-size="20" font-weight="700" fill="#ffffff">Eng Lead</text>
+    <rect x="607" y="758" width="120" height="9" rx="4.5" fill="#90ebcd" opacity="0.5"/>
+  </g>
+  <!-- QA Lead -->
+  <g>
+    <rect x="835" y="706" width="250" height="104" rx="16" fill="#06231e" opacity="0.5"/>
+    <rect x="835" y="700" width="250" height="104" rx="16" fill="#103b32" stroke="#90ebcd" stroke-width="2.5"/>
+    <rect class="glow g5" x="835" y="700" width="250" height="104" rx="16" fill="none" stroke="#fe7c3f" stroke-width="3"/>
+    <g transform="translate(853,724)">
+      <rect width="56" height="56" rx="13" fill="#90ebcd"/>
+      <circle cx="28" cy="22" r="9" fill="#0c322c"/>
+      <path d="M13 50 C13 34 43 34 43 50 Z" fill="#0c322c"/>
+    </g>
+    <text class="lbl" x="927" y="742" font-size="20" font-weight="700" fill="#ffffff">QA Lead</text>
+    <rect x="927" y="758" width="108" height="9" rx="4.5" fill="#90ebcd" opacity="0.5"/>
+  </g>
+
+  <!-- caption -->
+  <g transform="translate(80,918)">
+    <circle cx="8" cy="-6" r="7" fill="#fe7c3f"/>
+    <text class="mono" x="26" y="0" font-size="24" fill="#90ebcd" opacity="0.75">org · flowchart · timeline</text>
+    <rect class="caret" x="426" y="-19" width="4" height="22" fill="#fe7c3f"/>
+  </g>
+</svg>

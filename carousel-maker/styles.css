@@ -1,0 +1,79 @@
+/* Carousel Maker — a multi-page free-form canvas. Boxes carry GLOBAL coordinates
+   across the whole strip; hooks.js buckets them into per-page groups (by centre)
+   and emits each box at coordinates LOCAL to its page frame, so each [data-pdf-page]
+   exports as one true page (image sequence / PDF page) and headless CLI/URL render
+   identically. Per-box styling is computed in hooks.js and applied inline. These
+   classes carry only the structural layout. Auto-scoped to #tool-canvas.
+
+   The frames sit side by side in a flex row with gap: var(--gap). That gap MUST equal
+   hooks.js GAP and render.pages.gap in tool.json, or the free-canvas overlay's box
+   handles (global coords) will drift from the rendered frames. */
+
+.cm-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap, 56px);
+  width: max-content;
+}
+
+/* One page = one [data-pdf-page] frame. Locked to the page size so each frame
+   exports as one image / PDF page; overflow:hidden clips content that bleeds off
+   the page. (The overlay lifts this to overflow:visible while a box is being dragged,
+   so a box crossing between pages stays visible mid-drag.) */
+.cm-page {
+  position: relative;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: var(--pw, 1080px);
+  height: var(--ph, 1350px);
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.lolly-box {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  overflow: hidden;
+  /* transform-origin centre so hooks.js rotate() spins about the box middle —
+     this must match the free-canvas overlay's rotation model. */
+  transform-origin: 50% 50%;
+}
+
+.lolly-box-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* A Lottie box reuses .lolly-box-img for position/size, but it's a <div> the shell's
+   lottie-mount enhancer fills with an <svg> (object-fit doesn't apply to a div, so the
+   fit is honoured via the player's preserveAspectRatio from data-lottie-fit). Keep the
+   player non-interactive so it never steals the editor's drag/select pointer events. */
+.lolly-box-lottie { pointer-events: none; }
+.lolly-box-lottie > svg { display: block; width: 100%; height: 100%; }
+
+.lolly-box-text {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  /* Inner padding is computed per box in hooks.js (the `pad` field) and applied
+     inline, so it renders identically headless; this is just the resting default. */
+  padding: 8px;
+  box-sizing: border-box;
+  font-family: "SUSE", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.12;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+/* Semi-rich text: **bold** / *italic* render relative to the block's own weight. */
+.lolly-box-text strong { font-weight: bolder; }
+.lolly-box-text em { font-style: italic; }

@@ -1,0 +1,12 @@
+<div class="cm-strip" style="{{{stripStyle}}}">
+  {{#each frames}}
+  <div class="cm-page" data-pdf-page data-frame-index="{{@index}}" style="background:{{bg}}">
+    {{#each boxes}}
+    <div class="lolly-box" data-canvas-input="boxes:{{flatIndex}}" data-box-id="{{default id flatIndex}}" style="{{{boxStyle}}}">
+      {{{mediaHtml}}}
+      <div class="lolly-box-text" style="{{{textStyle}}}">{{{textHtml}}}</div>
+    </div>
+    {{/each}}
+  </div>
+  {{/each}}
+</div>

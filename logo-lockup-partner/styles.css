@@ -1,0 +1,111 @@
+/* Logo Lockup: Partner — a horizontal co-branding lockup.
+   Every logo is a plain <img> sized by an inline pixel height (computed in the hook:
+   base height × optical balance × presence). width:auto keeps each logo's own aspect,
+   so the SVG/PDF export walker — which reads each element's rendered box — reproduces
+   the layout faithfully. Connectors are a coloured rule / glyph / text, all of which
+   survive vector export (background-colour rect, outlined text). */
+
+.ll-stage {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 40px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.ll-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ll-gap, 56px);
+  max-width: 100%;
+}
+
+.ll-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.ll-img {
+  display: block;
+}
+
+.ll-f-grayscale { filter: grayscale(1); }
+.ll-f-desaturate { filter: saturate(0); }
+.ll-f-brighten { filter: brightness(1.5) contrast(1.4); }
+.ll-f-darken { filter: brightness(0.62) contrast(1.18); }
+.ll-f-invert { filter: invert(1); }
+/* "Convert to ink" — knock the logo back to a solid one-colour silhouette in the
+   theme's ink. brightness(0) crushes every opaque pixel to black (alpha kept); the
+   dark-theme variant then inverts that black to white. The hook picks the class by
+   theme; the export walker bakes it into raster logos like any other treatment. */
+.ll-f-ink-dark { filter: brightness(0); }
+.ll-f-ink-light { filter: brightness(0) invert(1); }
+
+/* Partners ride beside the connector. In the even-row layout they stay on one line;
+   in the lead+partners layout they wrap into a tidy block next to the (emphasised) lead. */
+.ll-partners {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ll-gap, 56px);
+  flex-wrap: nowrap;
+}
+
+.ll-layout-lead .ll-partners {
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+/* Connector */
+.ll-conn {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Connector colour/background is set inline by the hook — a solid colour pre-blended
+   toward the theme background, NOT CSS opacity (the PDF vector walker drops opacity, so
+   a 0.32 hairline would export as a solid ink bar). These rules carry only structure. */
+.ll-conn-bar {
+  width: 2px;
+  border-radius: 2px;
+}
+
+.ll-conn-symbol {
+  font: 300 1em/1 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.ll-conn-text {
+  max-width: 9ch;
+  text-align: center;
+  font: 500 1em/1.25 system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight: var(--conn-weight, 500);
+  letter-spacing: 0.01em;
+}
+
+.ll-empty {
+  max-width: 34ch;
+  padding: 28px 32px;
+  text-align: center;
+  color: #9ca3af;
+  font: 500 18px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  border: 2px dashed #d4d4d8;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.ll-empty:hover { color: #6b7280; border-color: #a1a1aa; }
+.ll-empty:focus-visible {
+  color: #6b7280;
+  border-color: #a1a1aa;
+  outline: 2px solid #1d4ed8;
+  outline-offset: 3px;
+}

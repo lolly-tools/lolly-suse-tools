@@ -1,0 +1,57 @@
+{
+  "id": "top-tail-recorder",
+  "name": "Top & Tail Video",
+  "description": "Record a clip in any orientation, then auto-wrap it with branded intro and outro bookends, a lower-third, and a music bed.",
+  "a11yLabel": "Top and tail video — {{default introTitle \"intro\"}} to {{default outroTitle \"outro\"}}",
+  "version": "1.0.0",
+  "engineVersion": "^1.17.0",
+  "status": "experimental",
+  "category": "everyone",
+  "tags": ["video", "record", "recording", "camera", "microphone", "audio", "sound", "intro", "outro", "bookend", "lower-third", "reel", "social", "portrait", "landscape", "music", "levels"],
+  "capabilities": ["camera", "microphone"],
+  "render": {
+    "width": 1080,
+    "height": 1920,
+    "formats": ["mp4", "webm", "gif", "apng", "png"],
+    "capture": "av",
+    "actions": ["download", "save"],
+    "printMarks": false,
+    "convertPaths": false,
+    "video": { "wait": 0, "duration": 8 }
+  },
+  "inputs": [
+    {
+      "id": "orientation", "label": "Orientation", "type": "select", "default": "portrait",
+      "options": [
+        { "value": "portrait",  "label": "Portrait · 1080 × 1920",  "width": 1080, "height": 1920, "unit": "px" },
+        { "value": "landscape", "label": "Landscape · 1920 × 1080", "width": 1920, "height": 1080, "unit": "px" },
+        { "value": "square",    "label": "Square · 1080 × 1080",    "width": 1080, "height": 1080, "unit": "px" }
+      ]
+    },
+    {
+      "id": "clip", "label": "Your clip", "type": "asset", "assetType": "video", "allowUpload": true,
+      "help": "Tap ● Record on the canvas to film a clip — or upload a video. The bookends wrap around it, filling the frame in any orientation."
+    },
+    {
+      "id": "clipFit", "label": "Video fit", "type": "select", "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Fill frame (crop)" },
+        { "value": "contain", "label": "Fit whole video" }
+      ],
+      "help": "How your clip sits in the frame. Fill crops it to cover the frame; Fit shows the whole video with bars — handy when you upload a landscape or square clip into a portrait frame."
+    },
+    { "id": "brandColor", "label": "Bookend colour", "type": "color", "default": "#0c322c" },
+    { "id": "accent", "label": "Accent", "type": "color", "default": "#30ba78" },
+    {
+      "id": "logo", "label": "Logo", "type": "asset", "assetType": "image", "allowUpload": true,
+      "default": { "source": "library", "id": "suse/logo/hor-neg-white" },
+      "help": "Shown on the intro & outro cards."
+    },
+    { "id": "introTitle", "label": "Intro title", "type": "text", "default": "", "maxLength": 40, "group": "Intro card" },
+    { "id": "introSubtitle", "label": "Intro subtitle", "type": "text", "default": "", "maxLength": 60, "group": "Intro card" },
+    { "id": "lowerName", "label": "Name", "type": "text", "default": "", "maxLength": 40, "bindToProfile": "firstname", "group": "Lower third" },
+    { "id": "lowerRole", "label": "Role / handle", "type": "text", "default": "", "maxLength": 60, "group": "Lower third" },
+    { "id": "outroTitle", "label": "Outro title", "type": "text", "default": "Thanks for watching", "maxLength": 40, "group": "Outro card" },
+    { "id": "outroCta", "label": "Outro call-to-action", "type": "text", "default": "suse.com", "maxLength": 48, "group": "Outro card" }
+  ]
+}

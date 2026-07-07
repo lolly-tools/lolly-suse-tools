@@ -1,0 +1,326 @@
+{
+  "id": "multi-page-pdf",
+  "name": "Multi-Page PDF",
+  "description": "Build a multi-page PDF — a cover, flowing content blocks, and a back page.",
+  "a11yLabel": "{{default coverTitle \"Untitled\"}} — multi-page PDF document",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "status": "official",
+  "category": "designer",
+  "tags": ["pdf", "document", "report", "multi-page", "brochure", "layout", "print"],
+  "featured": {
+    "order": 3,
+    "blurb": "Multi-page PDFs — cover, content, back"
+  },
+  "examples": [
+    { "label": "Pine · green report", "values": { "theme": "light", "accent": "#30ba78", "coverTitle": "Content Automation Report 2026", "coverSubtitle": "A summer of building in the open", "coverImage": { "source": "library", "id": "suse/photos/susecon26-keynote-tues-19" }, "backImage": { "source": "library", "id": "suse/photos/susecon26-demopalooza-mon-4" } } },
+    { "label": "Waterhole · Handbuch · Deutsch", "values": { "theme": "dark", "accent": "#2453ff", "coverTitle": "Plattform-Engineering-Handbuch", "coverSubtitle": "Standards, Muster und goldene Pfade", "coverImage": { "source": "library", "id": "suse/campaign/optimize-1" } } },
+    { "label": "Midnight · QBR · headshot", "values": { "theme": "light", "accent": "#192072", "pageSize": "letter", "coverTitle": "Quarterly Business Review", "coverSubtitle": "Q2 FY26 — results and outlook", "coverImage": { "source": "library", "id": "suse/headshots/frank-feldmann" } } },
+    { "label": "Persimmon · Edge & AI field guide", "values": { "theme": "dark", "accent": "#fe7c3f", "coverBg": "#192072", "coverTitle": "Edge & AI Field Guide", "coverSubtitle": "From the datacenter to the far edge", "coverImage": { "source": "library", "id": "suse/campaign/manage-secure-1" } } },
+    { "label": "Jungle · Charte · Français", "values": { "theme": "light", "accent": "#0c322c", "pageSize": "a5", "coverTitle": "Charte de marque", "coverSubtitle": "Voix, logo, couleur et typographie", "coverLogoSize": "large", "coverImage": { "source": "library", "id": "suse/photos/susecon26-branding-mon-18" } } },
+    { "label": "Mint · impact report · headshot", "values": { "theme": "dark", "accent": "#90ebcd", "coverBg": "#192072", "coverTitle": "Annual Impact Report", "coverSubtitle": "Community, sustainability, open source", "coverImage": { "source": "library", "id": "suse/headshots/dirk-peter-van-leeuwen" }, "backImage": { "source": "library", "id": "suse/photos/susecon26-keynote-wed-11" } } }
+  ],
+  "render": {
+    "width": 794,
+    "height": 1123,
+    "formats": ["pdf", "pptx", "svg", "md"],
+    "actions": ["download", "save"],
+    "paged": true,
+    "printMarks": false,
+    "c2pa": true,
+    "aspectWarning": {
+      "max": 1,
+      "message": "This document is built for portrait pages. A landscape or wider size breaks the two-column layout — keep height the longer side."
+    }
+  },
+  "hooks": {
+    "onInit": true,
+    "onInput": true
+  },
+  "inputs": [
+    {
+      "id": "pageSize",
+      "label": "Page size",
+      "type": "select",
+      "default": "a4",
+      "help": "Sets every page's size and the exported PDF page size. Each page in the document renders at exactly this size.",
+      "options": [
+        { "value": "a4", "label": "A4 portrait · 210 × 297 mm", "width": 210, "height": 297, "unit": "mm" },
+        { "value": "letter", "label": "US Letter · 216 × 279 mm", "width": 216, "height": 279, "unit": "mm" },
+        { "value": "a5", "label": "A5 portrait · 148 × 210 mm", "width": 148, "height": 210, "unit": "mm" }
+      ]
+    },
+    {
+      "id": "theme",
+      "label": "Light / dark style",
+      "type": "select",
+      "default": "light",
+      "help": "Sets the light or dark treatment (text and logo) for both the cover and the back page.",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark" }
+      ]
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "default": "#30ba78",
+      "help": "Used for the cover band, headings and rules."
+    },
+    {
+      "id": "bodyWeight",
+      "label": "Body weight",
+      "type": "number",
+      "display": "slider",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "section": "Typography",
+      "help": "Font weight of the body / paragraph text (100 Thin → 900 Black)."
+    },
+    {
+      "id": "headingWeight",
+      "label": "Heading weight",
+      "type": "number",
+      "display": "slider",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500,
+      "section": "Typography",
+      "help": "Font weight of the cover title and section headings (100 Thin → 900 Black)."
+    },
+
+    {
+      "id": "coverTitle",
+      "label": "Title",
+      "type": "text",
+      "default": "Content Automation Report 2026",
+      "maxLength": 90,
+      "section": "Cover"
+    },
+    {
+      "id": "coverSubtitle",
+      "label": "Subtitle",
+      "type": "text",
+      "default": "A summer of building in the open",
+      "maxLength": 120,
+      "section": "Cover"
+    },
+    {
+      "id": "coverText",
+      "label": "Cover text",
+      "type": "longtext",
+      "default": "Prepared for internal review.\n\n**Confidential** — not for distribution.",
+      "rows": 3,
+      "help": "Supports # headings, **bold**, *italic*, - bullet lists and 1. numbered lists.",
+      "section": "Cover"
+    },
+    {
+      "id": "coverLogo",
+      "label": "Logo",
+      "type": "asset",
+      "assetType": "any",
+      "allowUpload": true,
+      "help": "Your logo for the cover. Leave empty to use the SUSE logo.",
+      "section": "Cover"
+    },
+    {
+      "id": "coverLogoSize",
+      "label": "Logo size",
+      "type": "select",
+      "default": "medium",
+      "help": "How large the logo sits on the cover. Larger sizes give the logo more vertical space.",
+      "section": "Cover",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "xlarge", "label": "X-Large" },
+        { "value": "xxlarge", "label": "XX-Large" }
+      ]
+    },
+    {
+      "id": "coverImage",
+      "label": "Cover image",
+      "type": "asset",
+      "assetType": "image",
+      "allowUpload": true,
+      "help": "Optional hero image filling the top of the cover.",
+      "section": "Cover"
+    },
+    {
+      "id": "coverBg",
+      "label": "Cover background",
+      "type": "color",
+      "default": "",
+      "help": "Custom background colour for the cover. Leave empty to use the cover style default.",
+      "section": "Cover"
+    },
+
+    {
+      "id": "content",
+      "label": "Content blocks",
+      "type": "blocks",
+      "help": "Each block flows onto the pages between the cover and back page. A block sits in one column by default; set it to Wide to span both columns. New pages are created automatically as blocks fill up. Paste Markdown to turn a whole document into blocks (one per heading).",
+      "addMenu": { "field": "kind", "label": "Add block" },
+      "mdPaste": true,
+      "fields": [
+        {
+          "id": "kind",
+          "label": "Block type",
+          "type": "select",
+          "default": "text",
+          "options": [
+            { "value": "text", "label": "Text", "repeatable": true },
+            { "value": "image", "label": "Image", "repeatable": true }
+          ]
+        },
+        { "id": "heading", "label": "Heading", "type": "text", "showFor": ["text"], "placeholder": "Heading (optional)" },
+        {
+          "id": "body", "label": "Body", "type": "text", "showFor": ["text"],
+          "multilineFor": ["text"], "rows": 6,
+          "placeholder": "Body text — supports # headings, **bold**, *italic*, - bullets and 1. numbered lists"
+        },
+        { "id": "image", "label": "Image", "type": "asset", "assetType": "image", "allowUpload": true, "showFor": ["image"] },
+        {
+          "id": "caption", "label": "Caption", "type": "text", "showFor": ["image"],
+          "multilineFor": ["image"], "rows": 2, "placeholder": "Caption (optional)"
+        },
+        {
+          "id": "width", "label": "Width", "type": "select", "default": "column",
+          "options": [
+            { "value": "column", "label": "Column" },
+            { "value": "wide", "label": "Wide (full width)" }
+          ]
+        },
+        {
+          "id": "size", "label": "Height", "type": "select", "default": "auto",
+          "options": [
+            { "value": "auto", "label": "Auto (fit content)" },
+            { "value": "short", "label": "Short" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "tall", "label": "Tall" },
+            { "value": "full", "label": "Full page" }
+          ]
+        },
+        {
+          "id": "break", "label": "Page", "type": "select", "default": "auto",
+          "options": [
+            { "value": "auto", "label": "Flow with previous" },
+            { "value": "page", "label": "Start a new page" }
+          ]
+        }
+      ],
+      "default": [
+        { "kind": "text", "heading": "Introduction", "body": "Welcome. This document was generated from a handful of simple inputs — a title, some text blocks, and a couple of images.\n\nEach block flows onto the pages automatically. There is no page-by-page layout to manage: add blocks and the pages appear as they fill.", "width": "wide", "size": "auto", "break": "auto" },
+        { "kind": "text", "heading": "On brand by default", "body": "Headings, rules and the cover band all use your **accent colour**. Body text supports *italic*, **bold** and bullet lists:\n\n- One source of truth\n- Consistent typography\n- Export-ready PDF", "width": "column", "size": "auto", "break": "auto" },
+        { "kind": "text", "heading": "Column or wide", "body": "A block sits in a single column by default. Switch any block to *Wide* and it spans both columns — useful for an opening paragraph, a pull quote, or a full-width image.", "width": "column", "size": "auto", "break": "auto" },
+        { "kind": "text", "heading": "Set the height", "body": "Leave a block on **Auto** to size it to its content, or pin it to Short / Medium / Tall / Full so the grid stays tidy.", "width": "column", "size": "auto", "break": "auto" },
+        { "kind": "text", "heading": "Add as much as you like", "body": "When the blocks outgrow a page, the next page is created for you. The back page always comes last.", "width": "column", "size": "auto", "break": "auto" }
+      ]
+    },
+
+    {
+      "id": "backBg",
+      "label": "Back background",
+      "type": "color",
+      "default": "",
+      "help": "Custom background colour for the back page. Leave empty to use the cover style default.",
+      "section": "Back page"
+    },
+    {
+      "id": "backHeading",
+      "label": "Heading",
+      "type": "text",
+      "default": "Get in touch",
+      "maxLength": 90,
+      "section": "Back page"
+    },
+    {
+      "id": "backText",
+      "label": "Text",
+      "type": "longtext",
+      "default": "Thanks for reading. Reach out for source files, templates and guidelines.",
+      "rows": 3,
+      "help": "Supports # headings, **bold**, *italic*, - bullet lists and 1. numbered lists.",
+      "section": "Back page"
+    },
+    {
+      "id": "backCompany",
+      "label": "Company",
+      "type": "text",
+      "default": "SUSE",
+      "section": "Back page"
+    },
+    {
+      "id": "backEmail",
+      "label": "Email",
+      "type": "text",
+      "default": "contact@suse.com",
+      "bindToProfile": "email",
+      "section": "Back page"
+    },
+    {
+      "id": "backPhone",
+      "label": "Phone",
+      "type": "text",
+      "default": "",
+      "bindToProfile": "phone",
+      "section": "Back page"
+    },
+    {
+      "id": "backWebsite",
+      "label": "Website",
+      "type": "text",
+      "default": "www.suse.com",
+      "section": "Back page"
+    },
+    {
+      "id": "aboutHeading",
+      "label": "About heading",
+      "type": "text",
+      "default": "About SUSE",
+      "maxLength": 60,
+      "section": "Back page"
+    },
+    {
+      "id": "aboutText",
+      "label": "About text",
+      "type": "longtext",
+      "default": "SUSE is a global leader of enterprise open source software. By transforming community innovations into secure, sovereign and AI-ready solutions, SUSE empowers customers to escape vendor lock-in and regain control of their IT destiny. Through industry-leading Linux, Kubernetes, Edge and AI infrastructure solutions, SUSE delivers the flexibility to innovate everywhere—from the data center to multi-cloud and out to the edge. Only SUSE also manages many Linux and Kubernetes distributions. At SUSE, Choice Happens because we prioritize community, interoperability and relentless innovation. Discover how we power mission-critical resilience at www.suse.com",
+      "rows": 6,
+      "help": "Shown beneath the contact details on the back page. Supports # headings, **bold**, *italic*, - bullet lists and 1. numbered lists.",
+      "section": "Back page"
+    },
+    {
+      "id": "backImage",
+      "label": "Back image",
+      "type": "asset",
+      "assetType": "image",
+      "allowUpload": true,
+      "help": "Optional image along the top of the back page.",
+      "section": "Back page"
+    },
+    {
+      "id": "backLogoSize",
+      "label": "Logo size",
+      "type": "select",
+      "default": "medium",
+      "help": "How large the logo sits on the back page. Larger sizes give the logo more vertical space.",
+      "section": "Back page",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "xlarge", "label": "X-Large" },
+        { "value": "xxlarge", "label": "XX-Large" }
+      ]
+    },
+
+    { "id": "width", "label": "Page width", "type": "number", "default": 794, "min": 100, "max": 8000, "group": "export" },
+    { "id": "height", "label": "Page height", "type": "number", "default": 1123, "min": 100, "max": 8000, "group": "export" }
+  ]
+}

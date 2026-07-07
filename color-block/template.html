@@ -1,0 +1,269 @@
+<style>
+/* SUSE variable font — same source the lockup / dynamic-layout tools use. */
+@font-face {
+  font-family: 'SUSE';
+  src: url('/catalog/fonts/webfonts/SUSE[wght].woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SUSE';
+  src: url('/catalog/fonts/webfonts/SUSE-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+/* SUSE Mono — used by the 'caret' call-to-action style. */
+@font-face {
+  font-family: 'SUSE Mono';
+  src: url('/catalog/fonts/webfonts/SUSEMono[wght].woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.cb-root {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'SUSE', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* Baseline grid for the no-JS path (CLI / first paint). The controller below
+     replaces template-columns/rows with the count + aspect-ratio fit. */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+  grid-auto-rows: 1fr;
+}
+
+/* ── A block ──
+   Each block is a self-sizing cell. `container-type: size` lets the text fall
+   back to a cell-relative size (cqmin) when the fit controller can't run; on the
+   web the controller binary-searches an exact fill. The block also exposes its
+   content type as a parent class (heading-block, body-block, …) so authors can
+   make per-type CSS tweaks, e.g. `.cta-block .cb-text { letter-spacing: .1em }`. */
+.cb-block {
+  position: relative;
+  overflow: hidden;
+  container-type: size;
+  display: flex;
+  min-width: 0; min-height: 0;
+}
+
+/* Full-bleed background image (object-fit cover + pan/zoom from the block's
+   bgX / bgY / bgZoom). Sits under the content. */
+.cb-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cb-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 8cqmin;               /* no-JS baseline; the controller overrides */
+  overflow: hidden;
+}
+
+.cb-text {
+  font-size: calc(1em * var(--scale, 1));
+  font-weight: var(--weight, 400);
+  line-height: 1.06;
+  max-width: 100%;
+}
+.cb-text p { margin: 0 0 0.4em; }
+.cb-text p:last-child { margin-bottom: 0; }
+.cb-text strong { font-weight: 700; }
+.cb-text em { font-style: italic; }
+.cb-text del { text-decoration: line-through; }
+.cb-text ul { list-style: none; margin: 0.1em 0 0; padding: 0; }
+.cb-text li { position: relative; padding-left: 1.1em; margin: 0 0 0.3em; }
+.cb-text li::before {
+  content: ''; position: absolute; left: 0; top: 0.5em;
+  width: 0.38em; height: 0.38em; border-radius: 50%; background: currentColor;
+}
+.cb-text li.md-arrow::before      { content: '\2192'; background: none; left: -0.05em; top: 0; }
+.cb-text li.md-arrow-left::before { content: '\2190'; background: none; left: -0.05em; top: 0; }
+.cb-text li.md-arrow-up::before   { content: '\2191'; background: none; left: -0.05em; top: 0; }
+.cb-text li.md-arrow-down::before { content: '\2193'; background: none; left: -0.05em; top: 0; }
+
+/* ── Per-type defaults (authors override freely via the *-block parent class) ── */
+.heading-block    .cb-text { font-weight: var(--weight, 800); line-height: 0.96; letter-spacing: -0.02em; }
+.subheading-block .cb-text { font-weight: var(--weight, 500); line-height: 1.12; letter-spacing: -0.005em; }
+.body-block       .cb-text { font-weight: var(--weight, 400); line-height: 1.4; }
+
+.cta-block .cb-content { align-items: flex-start; }
+/* Base CTA is plain text — no box. The style sub-field opts into the rest. */
+.cb-cta {
+  display: inline-flex; align-items: center;
+  font-weight: var(--weight, 600);
+  line-height: 1; white-space: nowrap;
+}
+/* arrow — append a trailing arrow, otherwise plain text. */
+.cb-cta.cta-arrow::after { content: ' \2192'; }
+/* pill — outlined rounded button (the former default). */
+.cb-cta.cta-pill {
+  border: solid currentColor;
+  border-width: calc(var(--weight, 600) / 100 * 0.45px + 1px);
+  border-radius: 999px;
+  padding: 0.5em 1.1em;
+}
+/* caret — terminal prompt: near-black box, white SUSE Mono, brand-green cursor. */
+.cb-cta.cta-caret {
+  font-family: 'SUSE Mono', ui-monospace, SFMono-Regular, monospace;
+  background: #0c322c;
+  color: #ffffff;
+  padding: 0.4em 0.7em;
+  border-radius: 3px;
+}
+.cb-cta.cta-caret::after { content: ' _'; color: #30ba78; font-weight: 700; }
+
+/* Image: the block's own image or icon, centred and CONTAINED (not cropped) so a
+   whole photo — or a two-colour icon — shows in full, sized by scale on the cell
+   background. (Was a circular headshot; generalised so icons aren't clipped.) A
+   photo that should bleed to the cell edges can instead go on a blank block, whose
+   image is a full-cover background. */
+.image-block { align-items: center; justify-content: center; }
+.image-block .cb-img {
+  position: static; inset: auto;
+  width: calc(88cqmin * var(--scale, 1));
+  height: calc(88cqmin * var(--scale, 1));
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  flex: none;
+}
+
+/* ── Logo block ──
+   The SUSE mark lives in its own grid cell (never an overlay), so it can never
+   break the grid or sit on top of another block. The mark is centred and fits
+   inside the cell preserving its aspect — a horizontal lockup stays wide, a
+   stacked one stays tall — with the cell's background colour showing behind it.
+   The hook picks the exact asset (orientation × mono/green × pos/neg for the
+   background tone).
+
+   `--scale` is the block's "Logo size": the share of the cell the mark may fill,
+   so the surrounding clearspace is one predictable knob — even on every cell
+   shape — rather than something that falls out of the cell's aspect ratio. The
+   layout controller skips its generic text padding on logo cells (see below) so
+   this is the only clearspace, and the mark never double-shrinks. */
+.logo-block { align-items: center; justify-content: center; }
+.logo-block .cb-logo-mark {
+  position: relative;
+  z-index: 1;
+  width:  calc(100% * var(--scale, 0.8));
+  height: calc(100% * var(--scale, 0.8));
+  object-fit: contain;
+}
+</style>
+
+<div class="cb-root" id="cb-root">
+  {{#each blocks}}
+  <div class="cb-block {{kind}}-block{{#if this.bgImage}} has-img{{/if}}"
+       data-kind="{{kind}}"
+       data-canvas-input="blocks:{{@index}}"
+       style="background-color:{{lookup ../blockBg @index}}; color:{{lookup ../blockFg @index}}; --scale:{{lookup ../blockScale @index}}; --weight:{{default this.weight 400}};">
+    {{#if this.bgImage}}<img class="cb-img" src="{{asset this.bgImage}}" alt=""
+       style="object-position:{{default this.bgX 50}}% {{default this.bgY 50}}%; transform-origin:{{default this.bgX 50}}% {{default this.bgY 50}}%; transform:scale(calc({{default this.bgZoom 100}} / 100));">{{/if}}
+    {{#if (eq kind "heading")}}<div class="cb-content"><span class="cb-text">{{arrow this.text}}</span></div>{{/if}}
+    {{#if (eq kind "subheading")}}<div class="cb-content"><div class="cb-text">{{{markdown (arrow this.text)}}}</div></div>{{/if}}
+    {{#if (eq kind "body")}}<div class="cb-content"><div class="cb-text">{{{markdown this.text}}}</div></div>{{/if}}
+    {{#if (eq kind "cta")}}<div class="cb-content"><span class="cb-text cb-cta cta-{{default this.ctaStyle "none"}}">{{arrow this.text}}</span></div>{{/if}}
+    {{#if (eq kind "logo")}}<img class="cb-logo-mark" src="{{lookup ../blockLogo @index}}" alt="SUSE logo">{{/if}}
+  </div>
+  {{/each}}
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('cb-root');
+  if (!root) return;
+  var blocks = Array.prototype.slice.call(root.querySelectorAll('.cb-block'));
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  // Columns × rows that best fit `n` cells into an `ar`-wide frame: more columns
+  // as it gets wider, more rows as it gets taller, near-square in between.
+  function grid(n, ar) {
+    if (n <= 0) return { cols: 1, rows: 1 };
+    var cols = clamp(Math.round(Math.sqrt(n * ar)), 1, n);
+    return { cols: cols, rows: Math.ceil(n / cols) };
+  }
+
+  function applyGrid(W, H) {
+    var n = blocks.length;
+    if (!n) return;
+    var g = grid(n, (W && H) ? W / H : 16 / 9);
+    root.style.gridTemplateColumns = 'repeat(' + g.cols + ',1fr)';
+    root.style.gridTemplateRows = 'repeat(' + g.rows + ',1fr)';
+    // Stretch the final (short) row so it spans the full width — no empty cells.
+    blocks.forEach(function (b) { b.style.gridColumn = ''; });
+    var lastCount = n - (g.rows - 1) * g.cols;
+    if (lastCount > 0 && lastCount < g.cols) {
+      var base = Math.floor(g.cols / lastCount), extra = g.cols % lastCount;
+      var start = (g.rows - 1) * g.cols;
+      for (var k = 0; k < lastCount; k++) {
+        if (blocks[start + k]) blocks[start + k].style.gridColumn = 'span ' + (base + (k < extra ? 1 : 0));
+      }
+    }
+  }
+
+  function pad(b) { return Math.round(clamp(Math.min(b.clientWidth, b.clientHeight) * 0.09, 12, 96)); }
+
+  // Binary-search the content font-size so the block's text fills its cell
+  // (minus padding) without overflowing. One size scales the whole stack, so the
+  // per-type ratios hold.
+  //
+  // The block's "Text scale" (--scale) must read on top of this fill. Since
+  // .cb-text is `1em * var(--scale)`, the fill measurement already includes the
+  // scale, so the search would silently cancel it out (the text always fills
+  // regardless of the knob). So we neutralise --scale while measuring the
+  // natural fill size, then re-apply it — the text renders at fill × scale
+  // (under 1 = shrinks with whitespace; over 1 overflows and is clipped by the
+  // cell, matching the no-JS `8cqmin * var(--scale)` path).
+  function fit(b) {
+    var content = b.querySelector('.cb-content');
+    if (!content) return;
+    var text = content.querySelector('.cb-text');
+    if (!text || !text.textContent.trim()) return;
+    var availW = content.clientWidth, availH = content.clientHeight;
+    if (availW <= 0 || availH <= 0) return;
+    text.style.setProperty('--scale', '1');   // measure the natural fill, scale-free
+    function fits(s) { content.style.fontSize = s + 'px'; return content.scrollHeight <= availH && content.scrollWidth <= availW; }
+    var lo = 6, hi = Math.max(availW, availH);
+    if (!fits(hi)) {
+      while (hi - lo > 0.5) { var m = (lo + hi) / 2; if (fits(m)) lo = m; else hi = m; }
+      content.style.fontSize = lo + 'px';
+    }
+    text.style.removeProperty('--scale');      // restore the block's knob: fill × scale
+  }
+
+  function layout() {
+    var W = root.clientWidth, H = root.clientHeight;
+    applyGrid(W, H);
+    // Logo cells carry their clearspace in --scale (see .cb-logo-mark), so skip
+    // the generic text padding there — otherwise the two stack and the mark
+    // shrinks unpredictably with the cell's shape.
+    blocks.forEach(function (b) {
+      b.style.padding = (b.classList.contains('logo-block') ? 0 : pad(b)) + 'px';
+    });
+    blocks.forEach(fit);
+  }
+
+  layout();
+  // Re-measure with real glyph metrics once the SUSE font loads (export waits on
+  // document.fonts.ready), and whenever the frame is resized for export.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function () { layout(); });
+    ro.observe(root);
+  }
+}());
+</script>

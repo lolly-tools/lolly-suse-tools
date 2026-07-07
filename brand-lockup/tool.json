@@ -1,0 +1,128 @@
+{
+  "id": "brand-lockup",
+  "name": "Brand Lockup",
+  "description": "Official SUSE logo lockups — chameleon, wordmark and a name.",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "status": "official",
+  "category": "designer",
+  "tags": ["lockup", "logo", "brand", "chameleon", "wordmark", "product", "program", "team"],
+  "featured": {
+    "order": 7,
+    "blurb": "Official SUSE logo lockups, many looks",
+    "variants": [
+      { "label": "Horizontal green", "theme": "light", "values": { "name": "Storage", "category": "product", "orientation": "horizontal", "polarity": "positive", "treatment": "colour" } },
+      { "label": "Monochrome black", "theme": "light", "values": { "name": "Rancher Prime", "category": "product", "orientation": "stacked", "polarity": "positive", "treatment": "mono" } },
+      { "label": "Reverse colour", "theme": "dark", "values": { "name": "Storage", "category": "product", "orientation": "horizontal", "polarity": "negative", "treatment": "colour" } },
+      { "label": "Reverse white", "theme": "dark", "values": { "name": "AI Factory", "category": "product", "orientation": "stacked", "polarity": "negative", "treatment": "mono" } },
+      { "label": "Event panel · Madrid", "values": { "name": "Developer Summit", "category": "event", "location": "Madrid", "orientation": "stacked", "polarity": "negative", "background": "#0c322c" } }
+    ]
+  },
+  "render": {
+    "width": 1200,
+    "height": 1200,
+    "formats": ["svg", "png", "emf", "eps", "eps-cmyk", "dxf"],
+    "actions": ["copy", "download", "save"]
+  },
+  "inputs": [
+    {
+      "id": "name",
+      "label": "Name",
+      "type": "text",
+      "required": false,
+      "default": "",
+      "help": "The text that follows SUSE — e.g. \"Storage\", \"AI Factory\", or \"Data Team\". Leave blank for the SUSE master logo alone."
+    },
+    {
+      "id": "category",
+      "label": "Type",
+      "type": "select",
+      "default": "product",
+      "help": "Products use the simplest title (e.g. SUSE AI). Programs end in \"Program\"; teams end in \"Team\"; events carry a location.",
+      "options": [
+        { "value": "product", "label": "Product" },
+        { "value": "program", "label": "Program" },
+        { "value": "team", "label": "Team" },
+        { "value": "event", "label": "Event" }
+      ]
+    },
+    {
+      "id": "location",
+      "label": "Location",
+      "type": "text",
+      "required": false,
+      "default": "",
+      "help": "City or place — sits on its own line (e.g. \"Madrid\"). Shown for events and teams."
+    },
+    {
+      "id": "orientation",
+      "label": "Layout",
+      "type": "select",
+      "default": "stacked",
+      "options": [
+        { "value": "horizontal", "label": "Horizontal" },
+        { "value": "stacked", "label": "Stacked" }
+      ]
+    },
+    {
+      "id": "polarity",
+      "label": "Polarity",
+      "type": "select",
+      "default": "positive",
+      "help": "Positive for light backgrounds; negative for dark backgrounds.",
+      "options": [
+        { "value": "positive", "label": "Positive (light background)" },
+        { "value": "negative", "label": "Negative (dark background)" }
+      ]
+    },
+    {
+      "id": "treatment",
+      "label": "Colour",
+      "type": "select",
+      "default": "colour",
+      "help": "Full colour keeps the chameleon green; monochrome renders everything one colour (black on light, white on dark).",
+      "options": [
+        { "value": "colour", "label": "Full colour" },
+        { "value": "mono", "label": "Monochrome" }
+      ]
+    },
+    {
+      "id": "wrapMode",
+      "label": "Name wrapping",
+      "type": "select",
+      "default": "balanced",
+      "help": "Stacked only: how the name wraps under SUSE. Compact stacks each long word onto its own line; wide keeps more words per line.",
+      "options": [
+        { "value": "compact", "label": "Compact" },
+        { "value": "balanced", "label": "Balanced" },
+        { "value": "wide", "label": "Wide" }
+      ]
+    },
+    {
+      "id": "size",
+      "label": "Export size",
+      "type": "select",
+      "default": "fit",
+      "help": "Fit hugs the lockup tightly. The fixed sizes centre it inside that canvas — the preview shows the box change.",
+      "options": [
+        { "value": "fit", "label": "Fit to lockup" },
+        { "value": "square", "label": "Square — 1080×1080", "width": 1080, "height": 1080, "unit": "px" },
+        { "value": "wide", "label": "Landscape — 1920×1080", "width": 1920, "height": 1080, "unit": "px" },
+        { "value": "portrait", "label": "Portrait — 1080×1350", "width": 1080, "height": 1350, "unit": "px" },
+        { "value": "story", "label": "Story — 1080×1920", "width": 1080, "height": 1920, "unit": "px" }
+      ]
+    },
+    {
+      "id": "background",
+      "label": "Background",
+      "type": "color",
+      "default": "transparent",
+      "help": "Transparent matches the brand source files. Set a colour to bake a background panel into the export."
+    }
+  ],
+  "capabilities": ["wasm"],
+  "hooks": {
+    "onInit": true,
+    "onInput": true
+  }
+}

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="460" viewBox="0 0 760 460" role="img" aria-label="Calendar event card preview">
+  <title>Calendar ICS preview</title>
+  <style>
+    .fam { font-family: 'SUSE','SUSE Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
+    .mono { font-family: 'SUSE Mono',ui-monospace,Menlo,monospace; }
+
+    /* gentle floating bob of the whole card */
+    .card { animation: bob 6s ease-in-out infinite; }
+    @keyframes bob {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-7px); }
+    }
+
+    /* sheen sweep across the card face */
+    .sheen { animation: sweep 5.2s ease-in-out infinite; }
+    @keyframes sweep {
+      0%,18%   { transform: translateX(-260px); }
+      55%,100% { transform: translateX(620px); }
+    }
+
+    /* clock minute hand sweeping the full turn */
+    .hand { transform-origin: 311px 300px; animation: tick 8s linear infinite; }
+    @keyframes tick { to { transform: rotate(360deg); } }
+
+    /* reminder dot pulse */
+    .ping   { transform-origin: 604px 306px; animation: ping 2.6s ease-out infinite; }
+    @keyframes ping {
+      0%   { transform: scale(0.6); opacity: .7; }
+      70%,100% { transform: scale(2.4); opacity: 0; }
+    }
+    .dotpulse { animation: dp 2.6s ease-in-out infinite; }
+    @keyframes dp { 0%,100%{opacity:1;} 50%{opacity:.55;} }
+
+    /* backdrop dot grid breathing */
+    .grid { animation: breathe 7s ease-in-out infinite; }
+    @keyframes breathe { 0%,100%{opacity:.10;} 50%{opacity:.16;} }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card,.sheen,.hand,.ping,.dotpulse,.grid { animation: none; }
+      .sheen { transform: translateX(620px); }
+      .ping  { opacity: 0; }
+    }
+  </style>
+
+  <defs>
+    <clipPath id="cardClip"><rect x="130" y="118" width="500" height="224" rx="22"/></clipPath>
+    <clipPath id="chipClip"><path d="M130 140 a22 22 0 0 1 22 -22 h116 v224 h-116 a22 22 0 0 1 -22 -22 Z"/></clipPath>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.4" fill="#90ebcd"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="760" height="460" fill="#0c322c"/>
+  <rect class="grid" width="760" height="460" fill="url(#dots)"/>
+
+  <!-- card group (bob) -->
+  <g class="card">
+    <!-- soft depth: solid low-opacity offset -->
+    <rect x="134" y="128" width="500" height="224" rx="22" fill="#04211c" opacity="0.55"/>
+
+    <!-- card face -->
+    <rect x="130" y="118" width="500" height="224" rx="22" fill="#ffffff"/>
+
+    <!-- date chip -->
+    <g clip-path="url(#chipClip)">
+      <rect x="130" y="118" width="140" height="224" fill="#30ba78"/>
+      <rect x="130" y="118" width="140" height="60" fill="#0c322c" opacity="0.14"/>
+    </g>
+    <text class="fam" x="200" y="162" text-anchor="middle" font-size="21" font-weight="700" letter-spacing="4" fill="#ffffff">JUL</text>
+    <text class="fam" x="200" y="258" text-anchor="middle" font-size="96" font-weight="800" fill="#ffffff">7</text>
+    <text class="fam" x="200" y="308" text-anchor="middle" font-size="19" font-weight="600" letter-spacing="3" fill="#eafff6">TUE</text>
+
+    <!-- main content -->
+    <!-- kicker -->
+    <text class="fam" x="296" y="160" font-size="15" font-weight="700" letter-spacing="2.5" fill="#5b7a72">CALENDAR EVENT</text>
+    <text class="mono" x="481" y="160" font-size="15" font-weight="700" letter-spacing="1" fill="#30ba78">.ics</text>
+
+    <!-- title -->
+    <text class="fam" x="295" y="210" font-size="40" font-weight="800" fill="#141414">Team meeting</text>
+
+    <!-- date line -->
+    <text class="fam" x="296" y="248" font-size="20" font-weight="500" fill="#4a4a4a">Tuesday, 7 July 2026</text>
+
+    <!-- divider -->
+    <rect x="296" y="270" width="298" height="1.5" fill="#e6e6e6"/>
+
+    <!-- time row -->
+    <g stroke="#30ba78" stroke-width="2" fill="none" stroke-linecap="round">
+      <circle cx="311" cy="300" r="12"/>
+    </g>
+    <line class="hand" x1="311" y1="300" x2="311" y2="291" stroke="#30ba78" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="311" cy="300" r="1.8" fill="#30ba78"/>
+    <text class="fam" x="334" y="307" font-size="21" font-weight="600" fill="#141414">9:00 AM &#8211; 10:00 AM</text>
+
+    <!-- reminder dot -->
+    <circle class="ping" cx="604" cy="306" r="6" fill="#fe7c3f"/>
+    <circle class="dotpulse" cx="604" cy="306" r="5" fill="#fe7c3f"/>
+
+    <!-- sheen -->
+    <g clip-path="url(#cardClip)">
+      <rect class="sheen" x="130" y="100" width="70" height="260" transform="skewX(-16)" fill="#ffffff" opacity="0.14"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Web icon maker: one glyph rendered at every icon size">
+  <style>
+    .g{font-family:'SUSE','SUSE Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+    .m{font-family:'SUSE Mono',ui-monospace,Menlo,monospace}
+    .glyph{transform-box:fill-box;transform-origin:center;animation:pop 2.8s ease-in-out infinite}
+    .glyph.a{animation-delay:0s}
+    .glyph.b{animation-delay:.18s}
+    .glyph.c{animation-delay:.36s}
+    .glyph.d{animation-delay:.54s}
+    .glyph.e{animation-delay:.72s}
+    .glyph.f{animation-delay:.9s}
+    .sheen{transform:translateX(560px);animation:sweep 4.4s ease-in-out infinite}
+    .dot{animation:blink 1.6s steps(1) infinite}
+    .cap{animation:capIn 2.8s ease-in-out infinite}
+    .cap.a{animation-delay:0s}.cap.b{animation-delay:.18s}.cap.c{animation-delay:.36s}
+    .cap.d{animation-delay:.54s}.cap.e{animation-delay:.72s}.cap.f{animation-delay:.9s}
+    @keyframes pop{0%,72%,100%{transform:scale(1)}40%{transform:scale(1.11)}}
+    @keyframes sweep{0%{transform:translateX(300px)}22%{transform:translateX(560px)}100%{transform:translateX(560px)}}
+    @keyframes blink{0%,60%{opacity:1}61%,100%{opacity:.25}}
+    @keyframes capIn{0%,72%,100%{opacity:.55}40%{opacity:1}}
+    @media (prefers-reduced-motion:reduce){
+      .glyph,.sheen,.dot,.cap{animation:none}
+      .sheen{transform:translateX(560px)}
+    }
+  </style>
+
+  <!-- reusable app-icon glyph: a 4-point spark -->
+  <symbol id="spark" viewBox="-100 -100 200 200">
+    <path fill="#0c322c" d="M0-100C13-31 31-13 100 0 31 13 13 31 0 100-13 31-31 13-100 0-31-13-13-31 0-100Z"/>
+  </symbol>
+
+  <rect width="512" height="512" fill="#0c322c"/>
+
+  <!-- header -->
+  <text x="34" y="118" class="m" font-size="42" font-weight="800" fill="#efefef">favicon<tspan fill="#fe7c3f">.ico</tspan></text>
+  <circle class="dot" cx="323" cy="104" r="7" fill="#90ebcd"/>
+  <text x="35" y="150" class="g" font-size="19" font-weight="600" fill="#90ebcd" opacity=".85">one glyph &#183; every icon size</text>
+
+  <!-- size ramp: same icon from 16 to 256 px, sitting on a shared baseline -->
+  <line x1="16" y1="380.5" x2="497" y2="380.5" stroke="#90ebcd" stroke-width="1" opacity=".18"/>
+
+  <!-- t1 16 -->
+  <rect x="21" y="362" width="18" height="18" rx="4" fill="#30ba78"/>
+  <g class="glyph a"><use href="#spark" x="25.3" y="366.3" width="9.4" height="9.4"/></g>
+  <text x="30" y="401" class="m" font-size="13" fill="#efefef" text-anchor="middle" opacity=".55"><tspan class="cap a">16</tspan></text>
+
+  <!-- t2 32 -->
+  <rect x="47" y="350" width="30" height="30" rx="7" fill="#30ba78"/>
+  <g class="glyph b"><use href="#spark" x="54.8" y="357.8" width="14.4" height="14.4"/></g>
+  <text x="62" y="401" class="m" font-size="13" fill="#efefef" text-anchor="middle" opacity=".55"><tspan class="cap b">32</tspan></text>
+
+  <!-- t3 48 -->
+  <rect x="85" y="332" width="48" height="48" rx="11" fill="#30ba78"/>
+  <g class="glyph c"><use href="#spark" x="96.5" y="343.5" width="25" height="25"/></g>
+  <text x="109" y="401" class="m" font-size="13" fill="#efefef" text-anchor="middle" opacity=".55"><tspan class="cap c">48</tspan></text>
+
+  <!-- t4 64 -->
+  <rect x="141" y="306" width="74" height="74" rx="16" fill="#30ba78"/>
+  <g class="glyph d"><use href="#spark" x="159" y="324" width="38" height="38"/></g>
+  <text x="178" y="401" class="m" font-size="13" fill="#efefef" text-anchor="middle" opacity=".55"><tspan class="cap d">64</tspan></text>
+
+  <!-- t5 128 -->
+  <rect x="223" y="270" width="110" height="110" rx="24" fill="#30ba78"/>
+  <g class="glyph e"><use href="#spark" x="251" y="298" width="54" height="54"/></g>
+  <text x="278" y="401" class="m" font-size="13" fill="#efefef" text-anchor="middle" opacity=".55"><tspan class="cap e">128</tspan></text>
+
+  <!-- t6 256 (hero) -->
+  <rect x="349" y="238" width="142" height="142" rx="32" fill="#061c17" opacity=".55"/>
+  <rect x="341" y="230" width="150" height="150" rx="33" fill="#30ba78"/>
+  <g class="glyph f"><use href="#spark" x="380" y="269" width="72" height="72"/></g>
+  <clipPath id="heroClip"><rect x="341" y="230" width="150" height="150" rx="33"/></clipPath>
+  <g clip-path="url(#heroClip)">
+    <g class="sheen"><rect x="-46" y="200" width="48" height="220" fill="#ffffff" opacity=".16" transform="rotate(20 0 305)"/></g>
+  </g>
+  <text x="416" y="401" class="m" font-size="13" fill="#90ebcd" text-anchor="middle" opacity=".7"><tspan class="cap f">256</tspan></text>
+</svg>

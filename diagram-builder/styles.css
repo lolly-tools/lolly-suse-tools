@@ -1,0 +1,11 @@
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  margin: 0 auto;
+}
+
+/* Click-to-focus: annotated parts (card→data source, background, title) jump to
+   their sidebar control on click — hint that they're interactive. */
+[data-canvas-input] { cursor: pointer; }

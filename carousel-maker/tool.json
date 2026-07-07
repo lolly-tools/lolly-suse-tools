@@ -1,0 +1,285 @@
+{
+  "id": "carousel-maker",
+  "name": "Carousel Maker",
+  "description": "Design a multi-page carousel on one canvas — set 1–6 same-size pages, drop objects onto each page, export an image sequence or a multi-page PDF.",
+  "version": "1.0.0",
+  "engineVersion": "^1.12.0",
+  "status": "community",
+  "category": "designer",
+  "tags": ["carousel", "pages", "multi-page", "social", "instagram", "linkedin", "slides", "swipe", "deck", "layout", "wysiwyg", "editor", "pdf", "sequence"],
+  "featured": {
+    "order": 2,
+    "blurb": "Swipeable carousels & multi-page layouts"
+  },
+  "render": {
+    "width": 1080,
+    "height": 1350,
+    "formats": ["png", "jpg", "webp", "svg", "pdf", "pptx"],
+    "actions": ["download", "save", "share"],
+    "layout": "editor",
+    "paged": true,
+    "dims": false,
+    "printMarks": false,
+    "transparentBg": true,
+    "pages": {
+      "count": "pages",
+      "width": "pageW",
+      "height": "pageH",
+      "gap": 56,
+      "min": 1,
+      "max": 6
+    }
+  },
+  "hooks": { "onInit": true, "onInput": true, "beforeExport": true },
+  "inputs": [
+    {
+      "id": "background",
+      "type": "color",
+      "label": "Page background",
+      "default": "#ffffff"
+    },
+    {
+      "id": "pages",
+      "type": "number",
+      "label": "Pages",
+      "default": 3,
+      "min": 1,
+      "max": 6,
+      "display": "slider",
+      "help": "How many pages the carousel has (1–6). Each page is the same size; export gives you one image per page or a multi-page PDF."
+    },
+    { "id": "pageW", "type": "number", "label": "Page width", "default": 1080, "min": 100, "max": 8000, "group": "export" },
+    { "id": "pageH", "type": "number", "label": "Page height", "default": 1350, "min": 100, "max": 8000, "group": "export" },
+    {
+      "id": "boxes",
+      "type": "blocks",
+      "label": "Boxes",
+      "labelledFields": true,
+      "addMenu": { "field": "kind", "label": "Add box" },
+      "canvas": {
+        "idField": "id",
+        "xField": "x",
+        "yField": "y",
+        "wField": "w",
+        "hField": "h",
+        "rotationField": "rot",
+        "shapeField": "shape",
+        "radiusField": "radius",
+        "fillField": "bg",
+        "opacityField": "opacity",
+        "imageField": "image",
+        "imgPosField": "imgpos",
+        "textField": "text",
+        "textColorField": "fg",
+        "fontSizeField": "fontSize",
+        "alignField": "align",
+        "valignField": "valign",
+        "weightField": "weight",
+        "fontField": "font",
+        "lineHeightField": "lineHeight",
+        "trackingField": "tracking",
+        "ligaturesField": "ligatures",
+        "alternatesField": "alternates",
+        "padField": "pad",
+        "fitField": "fit",
+        "blendField": "blend",
+        "groupField": "group",
+        "clipField": "clip",
+        "shadowField": "shadow",
+        "shadowColorField": "shadowColor",
+        "shadowXField": "shadowX",
+        "shadowYField": "shadowY",
+        "shadowBlurField": "shadowBlur",
+        "minSize": 8,
+        "import": { "formats": ["svg", "penpot", "pdf", "ai", "idml"] },
+        "addKinds": [
+          { "id": "box", "label": "Box", "seed": { "kind": "box", "bg": "#30BA78", "shape": "rounded", "text": "" } },
+          { "id": "text", "label": "Text", "seed": { "kind": "text", "bg": "", "shape": "rect", "text": "Text", "fg": "#0c322c", "fontSize": 64, "valign": "top", "font": "SUSE", "lineHeight": 1.12 } },
+          { "id": "image", "label": "Image", "seed": { "kind": "image", "bg": "#eef1f0", "shape": "rounded", "fit": "contain", "text": "" } },
+          { "id": "lottie", "label": "Animation", "seed": { "kind": "image", "bg": "", "shape": "rounded", "fit": "contain", "text": "" } },
+          { "id": "video", "label": "Video", "seed": { "kind": "image", "bg": "", "shape": "rounded", "fit": "contain", "text": "" } }
+        ]
+      },
+      "fields": [
+        { "id": "id", "type": "text" },
+        {
+          "id": "kind",
+          "type": "select",
+          "label": "Kind",
+          "default": "box",
+          "options": [
+            { "value": "box", "label": "Box", "repeatable": true },
+            { "value": "text", "label": "Text", "repeatable": true },
+            { "value": "image", "label": "Image", "repeatable": true }
+          ]
+        },
+        { "id": "x", "type": "number", "label": "X", "default": 120 },
+        { "id": "y", "type": "number", "label": "Y", "default": 120 },
+        { "id": "w", "type": "number", "label": "Width", "default": 320, "min": 1 },
+        { "id": "h", "type": "number", "label": "Height", "default": 200, "min": 1 },
+        { "id": "rot", "type": "number", "label": "Rotation", "default": 0, "min": -180, "max": 180 },
+        {
+          "id": "shape",
+          "type": "select",
+          "label": "Shape",
+          "default": "rect",
+          "options": [
+            { "value": "rect", "label": "Rectangle" },
+            { "value": "rounded", "label": "Rounded" },
+            { "value": "pill", "label": "Pill" },
+            { "value": "ellipse", "label": "Ellipse" }
+          ]
+        },
+        { "id": "radius", "type": "number", "label": "Corner radius", "default": 16, "min": 0, "showIf": { "shape": "rounded" } },
+        { "id": "bg", "type": "color", "label": "Fill", "default": "#30BA78" },
+        { "id": "opacity", "type": "number", "label": "Opacity", "default": 100, "min": 0, "max": 100, "display": "slider" },
+        { "id": "image", "type": "asset", "label": "Image, animation or video", "assetType": "any", "allowUpload": true, "help": "A photo, logo, SVG, GIF, Lottie animation, or a short video (MP4/WebM). Animations and video play live on the canvas; still exports (PNG/SVG/PDF) capture the current frame." },
+        {
+          "id": "fit",
+          "type": "select",
+          "label": "Image fit",
+          "default": "contain",
+          "options": [
+            { "value": "contain", "label": "Contain (fit inside)" },
+            { "value": "cover", "label": "Cover (crop to fill)" },
+            { "value": "fill", "label": "Stretch" }
+          ]
+        },
+        {
+          "id": "blend",
+          "type": "select",
+          "label": "Blend mode",
+          "default": "normal",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "multiply", "label": "Multiply" },
+            { "value": "screen", "label": "Screen" },
+            { "value": "overlay", "label": "Overlay" },
+            { "value": "darken", "label": "Darken" },
+            { "value": "lighten", "label": "Lighten" },
+            { "value": "color-dodge", "label": "Colour dodge" },
+            { "value": "color-burn", "label": "Colour burn" },
+            { "value": "hard-light", "label": "Hard light" },
+            { "value": "soft-light", "label": "Soft light" },
+            { "value": "difference", "label": "Difference" },
+            { "value": "exclusion", "label": "Exclusion" },
+            { "value": "hue", "label": "Hue" },
+            { "value": "saturation", "label": "Saturation" },
+            { "value": "color", "label": "Colour" },
+            { "value": "luminosity", "label": "Luminosity" }
+          ]
+        },
+        { "id": "text", "type": "text", "label": "Text", "default": "", "multilineFor": ["box", "text", "image"], "rows": 3, "help": "Rich text: **bold**, *italic* / _italic_, and lines starting with - or • become bullets." },
+        { "id": "fg", "type": "color", "label": "Text colour", "default": "#0c322c" },
+        { "id": "fontSize", "type": "number", "label": "Text size", "default": 48, "min": 4 },
+        {
+          "id": "align",
+          "type": "select",
+          "label": "Align",
+          "default": "center",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Centre" },
+            { "value": "right", "label": "Right" }
+          ]
+        },
+        {
+          "id": "valign",
+          "type": "select",
+          "label": "Vertical",
+          "default": "middle",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "middle", "label": "Middle" },
+            { "value": "bottom", "label": "Bottom" }
+          ]
+        },
+        {
+          "id": "weight",
+          "type": "select",
+          "label": "Weight",
+          "default": "500",
+          "help": "Black (900) is SUSE Sans only — SUSE Mono tops out at Extrabold (800).",
+          "options": [
+            { "value": "100", "label": "Thin" },
+            { "value": "200", "label": "Extra light" },
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semibold" },
+            { "value": "700", "label": "Bold" },
+            { "value": "800", "label": "Extrabold" },
+            { "value": "900", "label": "Black" }
+          ]
+        },
+        {
+          "id": "font",
+          "type": "select",
+          "label": "Font",
+          "default": "SUSE",
+          "options": [
+            { "value": "SUSE", "label": "SUSE Sans" },
+            { "value": "SUSE Mono", "label": "SUSE Mono" }
+          ]
+        },
+        { "id": "lineHeight", "type": "number", "label": "Line height", "default": 1.12, "min": 0.7, "max": 3, "step": 0.05 },
+        { "id": "tracking", "type": "number", "label": "Kerning", "default": 0, "min": -100, "max": 400, "step": 0.5, "help": "Uniform letter spacing (tracking) in px. Baked into the vector export." },
+        { "id": "ligatures", "type": "boolean", "label": "Ligatures", "default": true, "help": "Standard ligatures (fi, fl, …). Applies on screen and in the outlined SVG/PDF/EMF export." },
+        { "id": "alternates", "type": "boolean", "label": "Stylistic alternates", "default": false, "help": "OpenType stylistic alternates (salt), where the font provides them." },
+        { "id": "group", "type": "text", "label": "Group", "default": "" },
+        { "id": "clip", "type": "text", "label": "Clip to", "default": "" },
+        { "id": "pad", "type": "number", "label": "Text padding", "default": 8, "min": 0 },
+        {
+          "id": "shadow",
+          "type": "select",
+          "label": "Shadow",
+          "default": "none",
+          "help": "What the drop shadow applies to: the box outline, the text, or the visible content (image alpha). Raster export only — SVG/PDF flatten it.",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "box", "label": "Box" },
+            { "value": "text", "label": "Text" },
+            { "value": "content", "label": "Content" }
+          ]
+        },
+        { "id": "shadowColor", "type": "color", "label": "Shadow colour", "default": "#00000055" },
+        { "id": "shadowX", "type": "number", "label": "Shadow X", "default": 0, "min": -300, "max": 300 },
+        { "id": "shadowY", "type": "number", "label": "Shadow Y", "default": 0, "min": -300, "max": 300 },
+        { "id": "shadowBlur", "type": "number", "label": "Shadow blur", "default": 10, "min": 0, "max": 300 },
+        {
+          "id": "imgpos",
+          "type": "select",
+          "label": "Image position",
+          "default": "center",
+          "help": "Which edge or corner the image is anchored to — where a contained image sits inside the box, or which part of a cover-cropped image stays in frame. Honoured on screen and in PNG/SVG/PDF export.",
+          "options": [
+            { "value": "left top", "label": "Top left" },
+            { "value": "center top", "label": "Top" },
+            { "value": "right top", "label": "Top right" },
+            { "value": "left center", "label": "Left" },
+            { "value": "center", "label": "Centre" },
+            { "value": "right center", "label": "Right" },
+            { "value": "left bottom", "label": "Bottom left" },
+            { "value": "center bottom", "label": "Bottom" },
+            { "value": "right bottom", "label": "Bottom right" }
+          ]
+        }
+      ],
+      "default": [
+        { "id": "p1bg", "kind": "box", "x": 0, "y": 0, "w": 1080, "h": 1350, "rot": 0, "shape": "rect", "bg": "#0c322c" },
+        { "id": "p1logo", "kind": "image", "x": 80, "y": 96, "w": 300, "h": 110, "rot": 0, "shape": "rect", "bg": "transparent", "opacity": 100, "fit": "contain", "imgpos": "left center", "image": { "source": "library", "id": "suse/logo/hor-neg-white" } },
+        { "id": "p1head", "kind": "text", "x": 80, "y": 760, "w": 920, "h": 320, "rot": 0, "shape": "rect", "text": "Swipe to see\nwhat's {#30ba78|new}", "fg": "#ffffff", "fontSize": 104, "align": "left", "valign": "top", "weight": "600", "font": "SUSE", "lineHeight": 1.05 },
+        { "id": "p1kick", "kind": "text", "x": 80, "y": 1200, "w": 920, "h": 70, "rot": 0, "shape": "rect", "text": "SUSE · 2026", "fg": "#c0efde", "fontSize": 34, "align": "left", "valign": "top", "weight": "500", "font": "SUSE", "lineHeight": 1.12 },
+
+        { "id": "p2bg", "kind": "box", "x": 1136, "y": 0, "w": 1080, "h": 1350, "rot": 0, "shape": "rect", "bg": "#eafaf4" },
+        { "id": "p2head", "kind": "text", "x": 1216, "y": 150, "w": 920, "h": 180, "rot": 0, "shape": "rect", "text": "One platform,\n{#30ba78|edge to core}", "fg": "#0c322c", "fontSize": 76, "align": "left", "valign": "top", "weight": "600", "font": "SUSE", "lineHeight": 1.08 },
+        { "id": "p2body", "kind": "text", "x": 1216, "y": 430, "w": 920, "h": 620, "rot": 0, "shape": "rect", "text": "- Linux you can trust\n- Kubernetes at any scale\n- AI-ready infrastructure\n- Secure from edge to cloud", "fg": "#0c322c", "fontSize": 46, "align": "left", "valign": "top", "weight": "400", "font": "SUSE", "lineHeight": 1.5 },
+
+        { "id": "p3bg", "kind": "box", "x": 2272, "y": 0, "w": 1080, "h": 1350, "rot": 0, "shape": "rect", "bg": "#30ba78" },
+        { "id": "p3head", "kind": "text", "x": 2352, "y": 470, "w": 920, "h": 220, "rot": 0, "shape": "rect", "text": "Get started\ntoday", "fg": "#ffffff", "fontSize": 96, "align": "left", "valign": "top", "weight": "700", "font": "SUSE", "lineHeight": 1.05 },
+        { "id": "p3cta", "kind": "box", "x": 2352, "y": 760, "w": 400, "h": 100, "rot": 0, "shape": "pill", "bg": "#fe7c3f" },
+        { "id": "p3ctat", "kind": "text", "x": 2352, "y": 760, "w": 400, "h": 100, "rot": 0, "shape": "rect", "text": "Learn more →", "fg": "#ffffff", "fontSize": 34, "align": "center", "valign": "middle", "weight": "600", "font": "SUSE", "lineHeight": 1.12 }
+      ]
+    }
+  ]
+}

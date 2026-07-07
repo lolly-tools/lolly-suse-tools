@@ -1,0 +1,262 @@
+{
+  "id": "color-block",
+  "name": "Color Block",
+  "description": "Colour blocks — text, image, logo — auto-arranged into a grid.",
+  "a11yLabel": "Colour-block composition",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "status": "official",
+  "category": "everyone",
+  "tags": ["layout", "blocks", "grid", "responsive", "poster", "social", "composition"],
+  "featured": {
+    "order": 4,
+    "blurb": "Colour blocks — text, image, logo in a grid"
+  },
+  "examples": [
+    {
+      "label": "Campaign hero · square · 6 blocks",
+      "values": {
+        "width": 1350, "height": 1350,
+        "blocks": [
+          { "kind": "logo", "logoOrient": "horizontal", "logoColor": "green", "bgColor": "#efefef", "logoSize": 0.8 },
+          { "kind": "heading", "text": "Choice happens.", "bgColor": "#30ba78", "fgColor": "#0c322c", "scale": 1.2, "weight": 900 },
+          { "kind": "blank", "bgColor": "#0c322c", "bgImage": { "source": "library", "id": "suse/photos/susecon26-keynote-tues-53" } },
+          { "kind": "body", "text": "From edge to core, one open platform.", "bgColor": "#0c322c", "fgColor": "#ffffff", "scale": 0.95, "weight": 400 },
+          { "kind": "blank", "bgColor": "#192072", "bgImage": { "source": "library", "id": "suse/photos/kubecon-na-2025-booth" } },
+          { "kind": "cta", "text": "Explore", "bgColor": "#fe7c3f", "fgColor": "#ffffff", "ctaStyle": "pill", "scale": 1 }
+        ]
+      }
+    },
+    {
+      "label": "AI platform grid · wide · 6 blocks",
+      "values": {
+        "width": 1920, "height": 1080,
+        "blocks": [
+          { "kind": "heading", "text": "AI, unlocked", "bgColor": "#0c322c", "fgColor": "#30ba78", "scale": 1.3, "weight": 900 },
+          { "kind": "blank", "bgColor": "#0c322c", "bgImage": { "source": "library", "id": "suse/campaign/optimize-1" } },
+          { "kind": "subheading", "text": "Run models anywhere", "bgColor": "#192072", "fgColor": "#ffffff", "scale": 1, "weight": 600 },
+          { "kind": "logo", "logoOrient": "stacked", "logoColor": "mono", "bgColor": "#2453ff", "logoSize": 0.7 },
+          { "kind": "blank", "bgColor": "#0c322c", "bgImage": { "source": "library", "id": "suse/campaign/manage-secure-3" } },
+          { "kind": "cta", "text": "SUSE AI", "bgColor": "#30ba78", "fgColor": "#0c322c", "ctaStyle": "arrow", "scale": 1 }
+        ]
+      }
+    },
+    {
+      "label": "Secure edge · tall · 5 blocks",
+      "values": {
+        "width": 1080, "height": 1920,
+        "blocks": [
+          { "kind": "logo", "logoOrient": "horizontal", "logoColor": "green", "bgColor": "#ffffff", "logoSize": 0.8 },
+          { "kind": "heading", "text": "Secure by default", "bgColor": "#bff1ea", "fgColor": "#0c322c", "scale": 1.1, "weight": 800 },
+          { "kind": "blank", "bgColor": "#0c322c", "bgImage": { "source": "library", "id": "suse/campaign/manage-secure-1" } },
+          { "kind": "body", "text": "Confidential computing from edge to cloud.", "bgColor": "#192072", "fgColor": "#ffffff", "scale": 0.9, "weight": 400 },
+          { "kind": "cta", "text": "Read more", "bgColor": "#fe7c3f", "fgColor": "#ffffff", "ctaStyle": "pill", "scale": 1 }
+        ]
+      }
+    },
+    {
+      "label": "Event announce · flat banner · 4 blocks",
+      "values": {
+        "width": 1920, "height": 760,
+        "blocks": [
+          { "kind": "heading", "text": "SUSECON 2026", "bgColor": "#fe7c3f", "fgColor": "#ffffff", "scale": 1.4, "weight": 900 },
+          { "kind": "body", "text": "Three days of open source, cloud native and AI.", "bgColor": "#0c322c", "fgColor": "#ffffff", "scale": 1, "weight": 400 },
+          { "kind": "blank", "bgColor": "#192072", "bgImage": { "source": "library", "id": "suse/photos/susecon26-keynote-tues-95" } },
+          { "kind": "logo", "logoOrient": "stacked", "logoColor": "green", "bgColor": "#bff1ea", "logoSize": 0.7 }
+        ]
+      }
+    },
+    {
+      "label": "Product launch · portrait · 4 blocks",
+      "values": {
+        "width": 1080, "height": 1350,
+        "blocks": [
+          { "kind": "logo", "logoOrient": "horizontal", "logoColor": "mono", "bgColor": "#0c322c", "logoSize": 0.8 },
+          { "kind": "heading", "text": "Choice.", "bgColor": "#30ba78", "fgColor": "#0c322c", "scale": 1.2, "weight": 900 },
+          { "kind": "subheading", "text": "Open source, your way", "bgColor": "#bff1ea", "fgColor": "#0c322c", "scale": 1, "weight": 500 },
+          { "kind": "cta", "text": "Learn more", "bgColor": "#2453ff", "fgColor": "#ffffff", "ctaStyle": "pill", "scale": 1 }
+        ]
+      }
+    },
+    {
+      "label": "Ship faster · skinny · 3 blocks",
+      "values": {
+        "width": 820, "height": 1440,
+        "blocks": [
+          { "kind": "heading", "text": "Ship faster.", "bgColor": "#0c322c", "fgColor": "#30ba78", "scale": 1.4, "weight": 900 },
+          { "kind": "subheading", "text": "Enterprise Linux, delivered", "bgColor": "#fe7c3f", "fgColor": "#ffffff", "scale": 1, "weight": 600 },
+          { "kind": "logo", "logoOrient": "horizontal", "logoColor": "mono", "bgColor": "#192072", "logoSize": 0.75 }
+        ]
+      }
+    },
+    {
+      "label": "Zero trust · wide · 3 blocks",
+      "values": {
+        "width": 1600, "height": 900,
+        "blocks": [
+          { "kind": "logo", "logoOrient": "stacked", "logoColor": "green", "bgColor": "#ffffff", "logoSize": 0.8 },
+          { "kind": "heading", "text": "Zero trust", "bgColor": "#30ba78", "fgColor": "#0c322c", "scale": 1.1, "weight": 800 },
+          { "kind": "body", "text": "Full-lifecycle protection for cloud native workloads.", "bgColor": "#192072", "fgColor": "#ffffff", "scale": 0.9, "weight": 400 }
+        ]
+      }
+    }
+  ],
+  "render": {
+    "width": 1350,
+    "height": 1350,
+    "formats": ["png", "jpg", "webp", "pdf", "pdf-cmyk", "cmyk-tiff", "svg", "pptx", "html"],
+    "actions": ["copy", "download", "save"]
+  },
+  "hooks": {
+    "onInit": true,
+    "onInput": true
+  },
+  "inputs": [
+    {
+      "id": "blocks",
+      "label": "Blocks",
+      "type": "blocks",
+      "help": "Add blocks in any order — the layout repacks into a grid that fills the frame. Each type can be added once; blanks are unlimited.",
+      "addMenu": { "field": "kind", "label": "Add block" },
+      "fields": [
+        {
+          "id": "kind",
+          "label": "Type",
+          "type": "select",
+          "options": [
+            { "value": "heading",    "label": "Heading" },
+            { "value": "subheading", "label": "Subheading" },
+            { "value": "body",       "label": "Body text" },
+            { "value": "cta",        "label": "Call to action" },
+            { "value": "image",      "label": "Image" },
+            { "value": "logo",       "label": "Logo" },
+            { "value": "blank",      "label": "Blank", "repeatable": true }
+          ],
+          "default": "heading"
+        },
+        {
+          "id": "bgColor",
+          "label": "Background",
+          "type": "color",
+          "default": ""
+        },
+        {
+          "id": "fgColor",
+          "label": "Text colour",
+          "type": "color",
+          "default": "",
+          "showFor": ["heading", "subheading", "body", "cta"]
+        },
+        {
+          "id": "text",
+          "label": "Text",
+          "type": "text",
+          "default": "",
+          "placeholder": "Type here…",
+          "showFor": ["heading", "subheading", "body", "cta"],
+          "multilineFor": ["body"]
+        },
+        {
+          "id": "scale",
+          "label": "Text scale",
+          "type": "number",
+          "display": "slider",
+          "min": 0.3, "max": 2.5, "step": 0.05, "default": 1,
+          "showFor": ["heading", "subheading", "body", "cta", "image", "blank"]
+        },
+        {
+          "id": "weight",
+          "label": "Font weight",
+          "type": "number",
+          "display": "slider",
+          "min": 100, "max": 900, "step": 100, "default": 400,
+          "showFor": ["heading", "subheading", "body", "cta"]
+        },
+        {
+          "id": "ctaStyle",
+          "label": "Button style",
+          "type": "select",
+          "default": "none",
+          "showFor": ["cta"],
+          "options": [
+            { "value": "none",  "label": "None — plain text" },
+            { "value": "arrow", "label": "Arrow →" },
+            { "value": "pill",  "label": "Pill" },
+            { "value": "caret", "label": "Caret _" }
+          ]
+        },
+        {
+          "id": "logoOrient",
+          "label": "Logo lockup",
+          "type": "select",
+          "default": "stacked",
+          "showFor": ["logo"],
+          "options": [
+            { "value": "horizontal", "label": "Horizontal" },
+            { "value": "stacked",    "label": "Stacked" }
+          ]
+        },
+        {
+          "id": "logoColor",
+          "label": "Logo colour",
+          "type": "select",
+          "default": "green",
+          "showFor": ["logo"],
+          "options": [
+            { "value": "mono",  "label": "Mono — black / white" },
+            { "value": "green", "label": "Green" }
+          ]
+        },
+        {
+          "id": "logoSize",
+          "label": "Logo size",
+          "type": "number",
+          "display": "slider",
+          "help": "Share of the cell the mark fills — the rest is even clearspace.",
+          "min": 0.4, "max": 0.95, "step": 0.05, "default": 0.9,
+          "showFor": ["logo"]
+        },
+        {
+          "id": "bgImage",
+          "label": "Image",
+          "type": "asset",
+          "assetType": "any",
+          "allowUpload": true,
+          "help": "Pick a photo, or an icon (its colours can be themed in the picker).",
+          "showFor": ["heading", "subheading", "body", "cta", "image", "blank"]
+        },
+        {
+          "id": "bgX",
+          "label": "Image X",
+          "type": "number",
+          "display": "slider",
+          "min": 0, "max": 100, "step": 1, "default": 50,
+          "showFor": ["heading", "subheading", "body", "cta", "image", "blank"]
+        },
+        {
+          "id": "bgY",
+          "label": "Image Y",
+          "type": "number",
+          "display": "slider",
+          "min": 0, "max": 100, "step": 1, "default": 50,
+          "showFor": ["heading", "subheading", "body", "cta", "image", "blank"]
+        },
+        {
+          "id": "bgZoom",
+          "label": "Image zoom",
+          "type": "number",
+          "display": "slider",
+          "min": 100, "max": 400, "step": 1, "default": 100,
+          "showFor": ["heading", "subheading", "body", "cta", "image", "blank"]
+        }
+      ],
+      "default": [
+        { "kind": "logo",       "logoOrient": "horizontal", "logoColor": "mono", "bgColor": "#0c322c", "logoSize": 0.8 },
+        { "kind": "heading",    "text": "Choice.",   "bgColor": "#30ba78", "scale": 1, "weight": 900 },
+        { "kind": "subheading", "text": "", "bgColor": "#90ebcd", "scale": 1, "weight": 400 }
+      ]
+    },
+    { "id": "width",  "label": "Width",  "type": "number", "default": 1350, "min": 100, "max": 8000, "group": "export", "help": "Canvas width. The blocks repack to fill any size — tall, wide, square or banner." },
+    { "id": "height", "label": "Height", "type": "number", "default": 1350, "min": 100, "max": 8000, "group": "export" }
+  ]
+}

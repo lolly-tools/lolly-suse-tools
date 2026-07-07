@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000" width="1500" height="1000" role="img" aria-label="Code Canvas — a syntax-highlighted code window">
+  <!--
+    Lean, flat, ANIMATED committed gallery card for the code-canvas tool. Reproduces the
+    default code window (nuremberg window style: single × close) on the brand green
+    gradient, WITHOUT the drop-shadow that pushed the captured thumbnail to raster
+    (isExpensiveThumbSvg → PNG). Pure CSS @keyframes animate in an <img>: the window
+    gently bobs and a caret blinks. Code text falls back to a system monospace stack (an
+    <img>-loaded SVG runs in secure mode — no external webfont). A preview only — the
+    tool's real export keeps full fidelity + the SUSE Mono webfont.
+  -->
+  <style>
+    .code{font-family:'SUSE Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:34px}
+    .kw{fill:#48d19b}.fn{fill:#6fd8c0}.str{fill:#9be7c4}.id{fill:#eaf3ee}.pu{fill:#8fb9a8}
+    .ln{fill:#4a7d6a;opacity:.55}
+    .win{animation:cc-bob 4.6s ease-in-out infinite}
+    @keyframes cc-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+    .caret{fill:#48d19b;animation:cc-blink 1.1s steps(1) infinite}
+    @keyframes cc-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+    @media (prefers-reduced-motion:reduce){.win{animation:none}.caret{animation:none;opacity:.9}}
+  </style>
+  <defs>
+    <radialGradient id="cc-bg" cx="42%" cy="38%" r="78%">
+      <stop offset="0" stop-color="#175a46"/>
+      <stop offset="1" stop-color="#092824"/>
+    </radialGradient>
+  </defs>
+  <rect width="1500" height="1000" fill="url(#cc-bg)"/>
+  <g class="win">
+    <rect x="90" y="250" width="1320" height="500" rx="18" fill="#0b2f29"/>
+    <rect x="90" y="250" width="1320" height="56" rx="18" fill="#082019"/>
+    <text x="1360" y="296" class="code" font-size="34" fill="#8fb9a8" text-anchor="middle">&#215;</text>
+    <!-- line numbers -->
+    <g class="code ln" text-anchor="end">
+      <text x="176" y="388">1</text>
+      <text x="176" y="436">2</text>
+      <text x="176" y="484">3</text>
+      <text x="176" y="532">4</text>
+      <text x="176" y="580">5</text>
+      <text x="176" y="628">6</text>
+    </g>
+    <!-- code -->
+    <g class="code">
+      <text x="212" y="388"><tspan class="kw">const</tspan><tspan class="id"> greet</tspan><tspan class="pu"> = (</tspan><tspan class="id">name</tspan><tspan class="pu">) </tspan><tspan class="kw">=&gt;</tspan><tspan class="pu"> {</tspan></text>
+      <text x="212" y="436" xml:space="preserve"><tspan class="id">  console</tspan><tspan class="pu">.</tspan><tspan class="fn">log</tspan><tspan class="pu">(</tspan><tspan class="str">`Hello, </tspan><tspan class="pu">${</tspan><tspan class="id">name</tspan><tspan class="pu">}</tspan><tspan class="str">!`</tspan><tspan class="pu">);</tspan></text>
+      <text x="212" y="484" xml:space="preserve"><tspan class="kw">  return</tspan><tspan class="id"> name</tspan><tspan class="pu">;</tspan></text>
+      <text x="212" y="532"><tspan class="pu">};</tspan></text>
+      <text x="212" y="628"><tspan class="fn">greet</tspan><tspan class="pu">(</tspan><tspan class="str">'World'</tspan><tspan class="pu">);</tspan></text>
+    </g>
+    <rect class="caret" x="214" y="652" width="5" height="40"/>
+  </g>
+</svg>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520.51" height="341.62" class="sitting-geeko spot-illustration" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 520.51 341.62" preserveAspectRatio="xMinYMax meet">
+<style><![CDATA[:host, * { box-sizing: border-box; margin: 0; padding: 0; }
+  :host, * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .scene {
+    width: 100%;
+    height: 100%;
+    background: #0c322c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+
+svg { width: 100%; height: 100%; transform: scale(var(--geeko-scale, 1)); transform-origin: center; }
+svg * { transform-box: fill-box; }
+
+@keyframes branch-sway {
+  0%, 100% { transform: rotate(-1deg) }
+  50%       { transform: rotate(1deg) }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg) }
+  50%      { transform: rotate(10deg) }
+}
+
+@keyframes blink {
+  0%, 45%  { stroke-width: 0 }
+  50%      { stroke-width: 120 }
+  55%, 100%{ stroke-width: 0 }
+}
+
+@keyframes look {
+  0%   { transform: translate(-5%, -5%) }
+  35%  { transform: translate(20%, 85%) }
+  65%  { transform: translate(70%, 55%) }
+  100% { transform: translate(-5%, -5%) }
+}
+
+#climbing-geeko       { transform-origin: bottom right; animation: branch-sway calc(5s / var(--speed, 1)) infinite; }
+#gc-leaves-1          { transform-origin: top right;   animation: sway calc(6s / var(--speed, 1)) infinite; }
+#gc-leaves-2          { transform-origin: 50% 100%;    animation: sway calc(6s / var(--speed, 1)) infinite; }
+#gc-eyelids           { animation: blink var(--blink-rate, 4s) infinite; }
+#gc-pupil             { animation: look calc(8s / var(--speed, 1)) infinite; }
+
+.dangling-geeko > { transform-origin: bottom right; animation: branch-sway calc(5s / var(--speed, 1)) infinite; }
+.dg-body              { transform-origin: top right; animation: branch-sway calc(5s / var(--speed, 1)) infinite; }
+
+.dg-frontleg          { transform-origin: 10% 10%; }
+.dg-backleg           { transform-origin: 20% 100%; }
+
+.dg-backleg,
+.dg-backleg :last-child,
+.dg-backleg :nth-child(2),
+.dg-frontleg,
+.dg-frontleg :last-child { animation: sway calc(6s / var(--speed, 1)) infinite; }
+
+.dg-backleg            { animation-delay: -3s; }
+.dg-backleg :nth-child(2),
+.dg-frontleg           { animation-delay: -6s; }
+
+#gl-head               { transform-origin: bottom left; animation: sway calc(5s / var(--speed, 1)) infinite; }
+#gl-eyelids            { animation: blink var(--blink-rate, 4s) infinite; }
+#gl-pupil              { animation: look calc(4s / var(--speed, 1)) infinite; }
+
+#gp-tail               { animation: sway calc(6s / var(--speed, 1)) infinite; }
+#gp-head               { transform-origin: bottom left; animation: sway calc(6s / var(--speed, 1)) infinite; }
+#gp-eyelids            { animation: blink var(--blink-rate, 4s) infinite; }
+#gp-pupil              { animation: look calc(4s / var(--speed, 1)) infinite; }
+
+.dg-pupil              { transform-origin: 50% 50%; animation: look calc(4s / var(--speed, 1)) infinite; }
+.dg-eyelids            { animation: blink var(--blink-rate, 4s) infinite; }
+
+
+ 
+.curious-geeko > g{transform-origin: bottom right; animation: branch-sway calc(5s / var(--speed, 1)) infinite;}
+.curious-geeko {
+
+ 
+  display: block;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+ 
+
+}
+
+.laying-geeko {
+  display: block;
+ 
+ 
+  display: block;
+  width: 100%;
+ 
+  position: relative;
+  z-index: 3;
+ 
+
+}
+
+
+.sitting-geeko {
+  display: block;
+ 
+  min-height: 16rem;
+  display: block;
+  width: 100%;
+ 
+  margin: 0;
+ 
+
+
+}
+
+.dangling-geeko {
+  display: block;
+
+  width: 100%;
+  z-index: 1;
+ 
+ 
+}
+
+.spot-illustration {
+  pointer-events: none;
+  display: block;
+  position: relative;
+  z-index: 3;
+
+ }
+
+
+/* ── Themes ────────────────────────────────────────────────────────────────── */
+.scene {
+  --bg:       #0c322c;
+}
+.scene[data-theme="light"] {
+  --bg:       #f0f7f4;
+}
+.scene[data-theme="pine"] {
+  --bg:       #165c3c;
+}
+/* No baked backdrop — the scene composites over whatever sits behind it (a gallery
+   tile, a slide, an exported transparent PNG/APNG). Geeko keeps its own colours. */
+.scene[data-theme="transparent"] {
+  --bg:       transparent;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────────── */
+.scene {
+  background:      var(--bg);
+  display:         flex;
+  flex-direction:  row;
+  align-items:     stretch;
+  justify-content: flex-start;
+  overflow:        hidden;
+  container-type:  size;
+  font-family:     'SUSE', system-ui, sans-serif;
+  position:        relative;
+}
+
+/* ── Illustration area (full-bleed) ──────────────────────────────────────────── */
+.illustration-area {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translate(var(--illus-x, 0%), var(--illus-y, 0%));
+}
+
+
+
+
+/* spot-illustration stays behind text */
+.spot-illustration {
+  pointer-events: none;
+ }
+
+svg.flip { transform: scaleX(-1) scale(var(--geeko-scale, 1)) !important; }
+
+ 
+
+.scene{justify-content: left;}]]></style>
+
+<defs id="defs71"><linearGradient id="gp-linearGradient116"><stop id="stop116" offset="0" style="stop-color:#08201c;stop-opacity:.60402685"></stop><stop id="stop117" offset="1" style="stop-color:#091b17;stop-opacity:0"></stop></linearGradient><linearGradient id="gp-linearGradient108"><stop id="stop108" offset="0" style="stop-color:#32b678;stop-opacity:1"></stop><stop id="stop109" offset="1" style="stop-color:#008657;stop-opacity:1"></stop></linearGradient><linearGradient id="gp-linear-gradient-4" x1="306.29" x2="306.29" y1="261.57" y2="162.6" gradientUnits="userSpaceOnUse"><stop id="stop22" offset="0" stop-color="#1b6936" stop-opacity="0"></stop><stop id="stop23" offset=".28" stop-color="#1b6936" stop-opacity=".09"></stop><stop id="stop24" offset=".76" stop-color="#1b6936" stop-opacity=".35"></stop><stop id="stop25" offset="1" stop-color="#1b6936" stop-opacity=".5"></stop></linearGradient><linearGradient id="gp-linear-gradient-7" x1="268.39" x2="315.77" y1="124.6" y2="97.24" gradientTransform="translate(0 33)" gradientUnits="userSpaceOnUse"><stop id="stop33" offset="0" stop-color="#1b6936" stop-opacity="0"></stop><stop id="stop34" offset=".2" stop-color="#1b6936" stop-opacity=".11"></stop><stop id="stop35" offset=".69" stop-color="#1b6936" stop-opacity=".32"></stop><stop id="stop36" offset="1" stop-color="#1b6936" stop-opacity=".4"></stop></linearGradient><linearGradient id="gp-linear-gradient-9" x1="-1917.03" x2="-1917.03" y1="-1260.12" y2="-1250.59" gradientTransform="rotate(149.6 -969 -288.83)" gradientUnits="userSpaceOnUse"><stop id="stop48" offset="0" stop-color="#fff" stop-opacity="0"></stop><stop id="stop49" offset=".07" stop-color="#fff" stop-opacity=".1"></stop><stop id="stop50" offset=".27" stop-color="#fff" stop-opacity=".37"></stop><stop id="stop51" offset=".46" stop-color="#fff" stop-opacity=".59"></stop><stop id="stop52" offset=".63" stop-color="#fff" stop-opacity=".77"></stop><stop id="stop53" offset=".78" stop-color="#fff" stop-opacity=".9"></stop><stop id="stop54" offset=".91" stop-color="#fff" stop-opacity=".97"></stop><stop id="stop55" offset="1" stop-color="#fff"></stop></linearGradient><linearGradient id="gp-linear-gradient-10" x1="200.44" x2="235.58" y1="-1847.87" y2="-1787" gradientTransform="rotate(-30.4 3852.22 -1133.28)" gradientUnits="userSpaceOnUse"><stop id="stop56" offset="0" stop-color="#fff" stop-opacity="0"></stop><stop id="stop57" offset="1" stop-color="#1b6936" stop-opacity=".5"></stop></linearGradient><linearGradient id="gp-linear-gradient-15" x1="358.4" x2="401.46" y1="198.07" y2="198.07" gradientUnits="userSpaceOnUse"><stop id="stop70" offset="0" stop-color="#1b6936" stop-opacity=".6"></stop><stop id="stop71" offset="1" stop-color="#1b6936" stop-opacity="0"></stop></linearGradient><linearGradient xlink:href="#gp-linear-gradient-15" id="gp-linear-gradient-16" x1="394.4" x2="394.4" y1="186.78" y2="157.09" gradientTransform="translate(0 33)"></linearGradient><linearGradient xlink:href="#gp-linearGradient108" id="gp-linearGradient109" x1="473.74" x2="321.91" y1="184.15" y2="233.03" gradientTransform="translate(0 33)" gradientUnits="userSpaceOnUse"></linearGradient><linearGradient xlink:href="#gp-linearGradient108" id="gp-linearGradient111" x1="296.09" x2="330.23" y1="193.5" y2="252.63" gradientTransform="translate(0 33)" gradientUnits="userSpaceOnUse"></linearGradient><linearGradient xlink:href="#gp-linearGradient108" id="gp-linearGradient113" x1="322.48" x2="358.4" y1="120.03" y2="187.67" gradientTransform="translate(0 33)" gradientUnits="userSpaceOnUse"></linearGradient><linearGradient xlink:href="#gp-linear-gradient-4" id="gp-linearGradient114" x1="306.29" x2="306.29" y1="261.57" y2="162.6" gradientTransform="translate(0 33)" gradientUnits="userSpaceOnUse"></linearGradient><linearGradient xlink:href="#gp-linear-gradient-15" id="gp-linearGradient115" x1="358.4" x2="401.46" y1="198.07" y2="198.07" gradientTransform="translate(0 33)" gradientUnits="userSpaceOnUse"></linearGradient><radialGradient id="gp-radial-gradient-2" cx="199" cy="-1887.07" r="69.07" fx="199" fy="-1887.07" gradientTransform="rotate(-30.4 3791.55 -1149.78)" gradientUnits="userSpaceOnUse"><stop id="stop42" offset="0" stop-color="#a6d7ba"></stop><stop id="stop43" offset="1" stop-color="#fff" stop-opacity="0"></stop></radialGradient><radialGradient id="gp-radial-gradient-3" cx="219.65" cy="-1860.27" r="35.58" fx="219.65" fy="-1883.94" gradientTransform="rotate(-30.4 3852.22 -1133.28)" gradientUnits="userSpaceOnUse"><stop id="stop44" offset="0" stop-color="#fff"></stop><stop id="stop45" offset=".56" stop-color="#fdfdfd"></stop><stop id="stop46" offset=".76" stop-color="#f6f6f6"></stop><stop id="stop47" offset=".87" stop-color="#efeeee"></stop></radialGradient><radialGradient xlink:href="#gp-radial-gradient-2" id="gp-radial-gradient-4" cx="214.14" cy="-1806.16" r="37.95" fx="214.14" fy="-1806.16" gradientTransform="translate(0 33)"></radialGradient><radialGradient xlink:href="#gp-radial-gradient-2" id="gp-radial-gradient-5" cx="210.05" cy="141.1" r="80.89" fx="210.05" fy="141.1" gradientTransform="translate(0 33)"></radialGradient><radialGradient xlink:href="#gp-radial-gradient-2" id="gp-radial-gradient-6" cx="396.13" cy="166.74" r="31.64" fx="396.13" fy="166.74" gradientTransform="translate(0 33)"></radialGradient><radialGradient xlink:href="#gp-radial-gradient-2" id="gp-radialGradient114" cx="199" cy="-1887.07" r="69.07" fx="199" fy="-1887.07" gradientTransform="rotate(-30.4 3852.22 -1133.28)" gradientUnits="userSpaceOnUse"></radialGradient><radialGradient xlink:href="#gp-linearGradient116" id="gp-radialGradient117" cx="260.25" cy="237.5" r="260.25" fx="260.25" fy="237.5" gradientTransform="matrix(.929 0 0 .135 18.5 257.26)" gradientUnits="userSpaceOnUse"></radialGradient><clipPath id="gp-clipPath115" clipPathUnits="userSpaceOnUse"><path id="path115" d="M377.5 22.21c18.21 19.08 10 50.67-15.19 58.47a35.8 35.8 0 0 1-36.29-9.42c-18.19-19.07-9.98-50.65 15.19-58.47a35.8 35.8 0 0 1 36.28 9.41"></path></clipPath><style id="style1">.cls-18{fill:#32b678}</style></defs><path id="rect116" d="M0 251.52h520.51V327H0z" style="fill:url(#gp-radialGradient117);stroke:none;stroke-width:14.38;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"></path><g id="gp-tail"><path id="path72" d="M439.05 216.57c-2.02-19.46-18.13-36.38-37.41-39.02-11.71-1.88-24.6 1.28-33.15 9.74-13.18 12.29-15.37 35.89-1.41 48.4 7.23 6.43 18.89 7.83 27.03 2.39 9.63-6.48 10.19-20.44-.39-26.37-5.52-3.03-10.44 4.59-5.35 8.35 2.31 1.59 3.18 3.44 2.05 5.88-2.79 5.29-11.15 4.06-14.58.22-6.8-7.46-4.37-21.09 3.36-27.19 5.31-4.54 12.63-5.52 19.3-4.02 10.24 2.24 18.36 10.87 19.75 21.13 2.29 14.63-6.34 29.16-19.44 34.75l-.27.1c-31.95 12.1-75.48-6.45-82.34-10.76-10.13-6.37-13.46-9.14-20.11-13.67l20.11 52.73s47.24 3.74 75.48-1.19q.84-.02 1.7-.18c28.76-4.68 49.68-32.39 45.68-61.28z" class="cls-18" style="isolation:isolate;fill:url(#gp-linearGradient109);fill-opacity:1"></path><path id="path102" d="M367.08 235.69c7.23 6.43 18.89 7.83 27.03 2.39a16.4 16.4 0 0 0 7.35-12.5c-.17.36-1.75 3.65-3.44 5.96-1.79 2.45-25.34 19.55-39.62-10.87v.02a28.4 28.4 0 0 0 8.68 14.99z" style="isolation:isolate;fill:url(#gp-linearGradient115)"></path><path id="path103" d="M386.51 190.43c-16.38 2.23-16.9 23.6-14.07 29.35-2.2-10.77 3.1-17.93 6.75-20.81 5.31-4.54 12.63-5.52 19.3-4.02a25.7 25.7 0 0 1 19.18 18.34l-.1-.81c-2.26-15.25-14.68-24.28-31.06-22.05" style="isolation:isolate;fill:url(#gp-linear-gradient-16)"></path><path id="path104" d="M401.64 177.55c-11.71-1.88-24.6 1.28-33.15 9.74-9.33 8.7-13.14 23.06-9.63 35.15.02-.16 3.81-34.32 26.53-37.95 22.76-3.64 39.88 8.5 49.3 17.39-6.41-12.72-18.86-22.38-33.04-24.33z" style="opacity:.3;isolation:isolate;fill:url(#gp-radial-gradient-6)"></path></g><path id="path74" d="M315.28 246.9c-.11-2.42.09-4.92.52-7.43a60 60 0 0 1-13.04-8.79c-4.89-4.39-26.52-23.78-46.27-31.74l-.58.53a41 41 0 0 0-1.88-1.86c-29.73-14.23-54.67-3.45-61.53-.3-6.86 3.14-57.19 44.81-19.88 79.43 15.62 5.8 105.96 2.13 112.03 2.35 14.67.53 29.34.76 43.45-.33-8.56-8.26-12.31-20.26-12.83-31.85z" class="cls-18" style="isolation:isolate;fill:#025937"></path><path id="path77" d="M281.09 242.11c4.15 1.22-2.44 20.22 0 28.6 16.16.93 19.28 14.2 19.28 14.2-32.34.73-48.04 0-48.04 0v-35.34s4.7-14.53 28.76-7.46" class="cls-18" style="isolation:isolate;fill:#009762;fill-opacity:1"></path><path id="path80" d="M303.57 277.37s-22.01 12.68-13.56 15.67 14.26 0 14.26 0 13.91-1.76 23.59-1.41c0 0 0 1.94 2.82 1.94s19.54.7 19.37-2.11c-.18-2.82-6.69-8.63-14.26-17.08s-30.28-54.37-30.02-63.63-15.76-19.6-27.55-13.11-21.3 26.45-11.8 35.4 33.63 27.26 37.15 44.34z" class="cls-18" style="isolation:isolate"></path><path id="path81" d="M329.48 283.15c-1.95 2.53-1.62 8.48-1.62 8.48" style="fill:none;stroke:#32b678;stroke-miterlimit:10;stroke-width:4.14px;isolation:isolate"></path><path id="path82" d="M303.57 277.37s-22.01 12.68-13.56 15.67 9.85.81 14.26 0 13.91-1.76 23.59-1.41c0 0 0 1.94 2.82 1.94s19.54.7 19.37-2.11c-.18-2.82-6.69-8.63-14.26-17.08s-30.28-54.37-30.02-63.63-15.76-19.6-27.55-13.11-21.3 26.45-11.8 35.4 33.63 27.26 37.15 44.34z" style="isolation:isolate;mix-blend-mode:multiply;fill:url(#gp-linearGradient114)"></path><path id="path84" d="M296.58 113.96s-64.48-31.67-127.83 25.08S115.91 246 127.64 259.21s36.05 21.82 55.58 15.35 42.47-15.17 51.61-17.26 48.06-6.31 61.26-30.8c13.2-24.48 50.56-88.77.5-112.54z" class="cls-18" style="isolation:isolate;fill:url(#gp-linearGradient111);fill-opacity:1"></path><path id="path86" d="M296.58 113.96s-19.88-9.76-48.41-8.73c0 0 17.38 38.4 23.71 56.04 6.32 17.64 18.49 31.4 34.42 35.43q2.27.56 4.67.36c12.65-28.97 21.14-66.24-14.38-83.1z" style="mix-blend-mode:multiply;isolation:isolate;fill:url(#gp-linear-gradient-7)"></path><path id="path94" d="M179.09 242.16c5.31 22.05 18.14 42.5 19.33 46.04.84 2.52 1.92 5.83 4.4 7.16.14.07 2.31 2.36 6.74 3.14s35.75.68 35.75.68c-.05-1.31.02-1.74-.18-2.29 5.21-.07 13.85-.4 13.53-1.8-1.95-8.65-19-16.51-19-16.51s-14.26-7.16-17.28-15.32c-.57-1.53-.81-3.8-.75-6.22v-.02c.04-1.71.22-3.48.54-5.16.24-4.18 1.28-4.74.59-15.65-.8-12.52 41.65-18.18 20.61-40.33-19.4-19.4-35.06-9.35-41.04-3.9s-28.54 28.11-23.23 50.16z" class="cls-18" style="isolation:isolate"></path> <path id="path96" d="M119.85 275.85s6.75-69.87 29.87-70.39 12.47 30.65 11.43 43.12-4.08 20.56 1.24 21.81 13.75 7.23 13.82 14.41c-1.88 1.43-15.84 0-15.84 0s2.34 1.97 2.08 4.04-28.83 1.56-37.92 0-4.68-12.99-4.68-12.99" class="cls-18" style="isolation:isolate"></path><path id="path99" d="M252.33 131.9c21.79-1.56 39.2-9.69 49-15.4a57 57 0 0 0-4.75-2.54s-64.48-31.67-127.83 25.08c-47.67 42.7-53.52 81.7-48.49 104.02 20.6-89.99 97.84-108.71 132.08-111.16z" style="opacity:.3;isolation:isolate;fill:url(#gp-radial-gradient-5)"></path><path id="path101" d="M160.36 284.79s-7.17-6.16-10.87-8.04c0 0 13.15-.74 21.33 8.67 0 0-7.18-.17-10.46-.63m84.77 12.11s-4.75-6.51-9.75-8.46c0 0 12.65.24 19.38 7.98 0 0-6.13.51-9.63.48m82.73-5.27s-.33-5.94 1.62-8.48c0 0-21.03 3.5-25.21 9.88 0 0 14.64-1.94 23.59-1.41zm-46.77-20.93c-4.95-.72-11.03-.29-18.43 2.19 0 0 4.15-11.08 18.14-3.49z" style="fill:#008657"></path><g id="gp-head"><path id="path87" d="M415.06 115.62a229 229 0 0 1-31.43 19.29c-10.22 5.23-20.65 9.79-32.28 10.45-9.17.5-17.36.41-26.24-1.94a4.46 4.46 0 0 1-2.71-5.02c.58-2.41 4.24-3.36 5.69-3.11 14.51 2.42 32.97.59 48.43-7.51a299 299 0 0 0 24.29-14c3.95-2.58 10.1-6.15 14.16-8.59 2.09-1.26 8.18-4.03 7.94-6.89a5 5 0 0 0-.98-2.28c-20.32-31.81-44.28-67.09-87.45-62.64-32.22 3.31-80.87 7.68-101.33 9.67a6.62 6.62 0 0 0-5.04 9.94c6.38 10.87 16.11 26.15 24.46 40.36 27.37 45.37 29.64 117.13 74.69 103.03 4.5-2.06 9.14-3.76 13.69-5.72q13.22-5.61 25.4-13.22c13.37-8.36 25.73-18.53 36.04-30.5 7.22-8.31 13.69-17.6 18-27.77 4.9-11.57 2.97-9.62-5.32-3.54z" class="cls-18" style="isolation:isolate;fill:url(#gp-linearGradient113);fill-opacity:1"></path><path id="path89" d="M416.02 86.92c-19.13-29.05-42.46-57.56-81.54-53.54-32.22 3.31-80.87 7.68-101.33 9.67a6.62 6.62 0 0 0-5.04 9.94c3.3 5.62 7.5 12.43 11.94 19.65 27.53-13.69 73.74-29.82 111.34-28.42 29.64 1.1 39.28 25.06 64.64 42.69h.01z" style="opacity:.3;isolation:isolate;fill:url(#gp-radialGradient114)"></path><path id="path90" d="M377.5 55.21c18.21 19.08 10 50.67-15.19 58.47a35.8 35.8 0 0 1-36.29-9.42c-18.19-19.07-9.98-50.65 15.19-58.47a35.8 35.8 0 0 1 36.28 9.41" style="isolation:isolate;fill:url(#gp-radial-gradient-3);stroke:#32b678;stroke-opacity:1"></path><g id="gp-pupil"><path id="path91" d="M349.18 73.7a10.9 10.9 0 0 1-10.26 6.03c-7-.39-11.59-7.09-9.9-13.52a10.6 10.6 0 0 1 13.17-7.75 10.86 10.86 0 0 1 7 15.24" class="cls-18" style="isolation:isolate"></path><circle id="circle91" cx="337.98" cy="64.29" r="4.76" style="isolation:isolate;fill:url(#gp-linear-gradient-9)"></circle></g><path id="path92" d="M342.79 128.57c-27.91-.81-20.33 11.94-20.33 11.94h.01a4 4 0 0 1-.09-2.1c.58-2.41 4.24-3.36 5.69-3.11 14.51 2.42 32.97.59 48.43-7.51a299 299 0 0 0 24.29-14c3.95-2.58 10.1-6.15 14.16-8.59 2.09-1.26 8.18-4.03 7.94-6.89a5 5 0 0 0-.98-2.28l-1.38-2.16c-11.06 7.55-52.73 35.42-77.75 34.69z" style="isolation:isolate;fill:url(#gp-linear-gradient-10)"></path><path id="gp-path93" d="M415.06 115.62a229 229 0 0 1-31.43 19.29c-10.22 5.23-20.65 9.79-32.28 10.45-9.17.5-17.36.41-26.24-1.94-.93-.25-2.17-1.4-2.63-2.92 0 0 .56 11.14 26.46 12.49 20.71 1.08 57.1-22.94 70.85-32.61.18-.42.42-.81.6-1.23 4.9-11.57 2.97-9.62-5.32-3.54z" style="opacity:.3;isolation:isolate;fill:url(#gp-radial-gradient-4)"></path><path id="gp-eyelids" d="m312.43 104.37 114.2-45.61M282.1 33.59 396.31-12" clip-path="url(#gp-clipPath115)" style="isolation:isolate;fill:none;fill-opacity:1;stroke:#30ba78;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none" transform="translate(0 33)"></path></g></svg>

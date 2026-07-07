@@ -1,0 +1,200 @@
+{
+  "id": "event-name-badge",
+  "name": "Event Name Badge",
+  "description": "Conference name badges with a colour-coded role and optional QR.",
+  "a11yLabel": "Event name badge for {{default firstname \"attendee\"}} {{default lastname \"\"}}, {{default status \"attendee\"}}",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "status": "official",
+  "category": "event",
+  "tags": ["badge", "name tag", "event", "conference", "lanyard", "qr", "tracks", "speaker", "sponsor"],
+  "featured": {
+    "order": 8,
+    "blurb": "Conference name badges, colour-coded by role"
+  },
+  "examples": [
+    { "label": "Speaker · dark · tracks + QR", "values": { "status": "speaker", "eventName": "SUSECON 2026", "firstname": "Amina", "lastname": "Okafor", "pronouns": "she/her", "jobTitle": "Principal Engineer", "company": "SUSE", "tracks": [ { "label": "Platform Engineering", "color": "" }, { "label": "Keynote", "color": "#fcb244" } ], "url": "https://susecon.com/s/amina" } },
+    { "label": "Attendee · light · tracks + QR", "values": { "status": "attendee", "background": "#ffffff", "eventName": "Cloud Native Summit", "firstname": "Marco", "lastname": "Reyes", "company": "Rancher Labs", "tracks": [ { "label": "Kubernetes", "color": "#3c8eef" }, { "label": "Edge", "color": "#42d29f" } ], "url": "https://cnsummit.dev/a/marco" } },
+    { "label": "Sponsor · landscape · QR", "values": { "size": "6x4in", "status": "sponsor", "roleColor": "#0a9bd6", "background": "#0c322c", "eventName": "KubeCon EU", "firstname": "David", "lastname": "Kim", "jobTitle": "Developer Advocate", "company": "SUSE", "tracks": [ { "label": "Booth B12", "color": "" } ], "url": "https://suse.com/kubecon" } },
+    { "label": "VIP · mint · QR", "values": { "status": "vip", "background": "#eafaf1", "eventName": "Partner Executive Forum", "firstname": "Lena", "lastname": "Vogt", "pronouns": "she/her", "jobTitle": "Chief Technology Officer", "company": "NorthWind", "url": "https://suse.com/vip/lena" } },
+    { "label": "Staff · dark · tracks", "values": { "status": "staff", "eventName": "SUSECON 2026", "firstname": "Tomás", "lastname": "Silva", "jobTitle": "Event Crew", "tracks": [ { "label": "Registration", "color": "#fe7c3f" }, { "label": "Help Desk", "color": "#30ba78" } ], "url": "https://susecon.com/help" } },
+    { "label": "Press · light landscape · QR", "values": { "size": "a6land", "status": "press", "background": "#ffffff", "eventName": "Open Source Summit", "firstname": "Yuki", "lastname": "Tanaka", "jobTitle": "Correspondent", "company": "TechDaily", "url": "https://ossummit.org/press/yuki" } }
+  ],
+  "render": {
+    "width": 1200,
+    "height": 1800,
+    "formats": ["pdf", "pdf-cmyk", "svg", "png", "jpg", "webp"],
+    "actions": ["copy", "download", "save"],
+    "convertPaths": false
+  },
+  "hooks": {
+    "onInit": true,
+    "onInput": true
+  },
+  "capabilities": ["compose"],
+  "composes": [
+    {
+      "id": "badgeQr",
+      "tool": "qr-code",
+      "format": "svg",
+      "inputs": {
+        "url": "{{url}}",
+        "color": "#0c322c",
+        "background": "#ffffff",
+        "ecl": "M",
+        "padding": 1,
+        "join": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "size",
+      "label": "Badge size",
+      "type": "select",
+      "default": "4x6in",
+      "help": "Sets the badge proportions and the export print size (shown on the badge as you design). Fine-tune the exact dimensions in the export bar if needed.",
+      "options": [
+        { "value": "a7", "label": "A7 portrait · 74 × 105 mm (small)", "width": 74, "height": 105, "unit": "mm" },
+        { "value": "3x4in", "label": "3 × 4 in portrait · 76 × 102 mm", "width": 76.2, "height": 101.6, "unit": "mm" },
+        { "value": "a6", "label": "A6 portrait · 105 × 148 mm", "width": 105, "height": 148, "unit": "mm" },
+        { "value": "4x6in", "label": "4 × 6 in portrait · 102 × 152 mm (large)", "width": 101.6, "height": 152.4, "unit": "mm" },
+        { "value": "4x3in", "label": "4 × 3 in landscape · 102 × 76 mm", "width": 101.6, "height": 76.2, "unit": "mm" },
+        { "value": "a6land", "label": "A6 landscape · 148 × 105 mm", "width": 148, "height": 105, "unit": "mm" },
+        { "value": "6x4in", "label": "6 × 4 in landscape · 152 × 102 mm (large)", "width": 152.4, "height": 101.6, "unit": "mm" }
+      ]
+    },
+    {
+      "id": "status",
+      "label": "Attendee status",
+      "type": "select",
+      "default": "attendee",
+      "help": "Colour-codes the badge and sets the role band.",
+      "options": [
+        { "value": "attendee", "label": "Attendee" },
+        { "value": "speaker", "label": "Speaker" },
+        { "value": "presenter", "label": "Presenter" },
+        { "value": "sponsor", "label": "Sponsor" },
+        { "value": "exhibitor", "label": "Exhibitor" },
+        { "value": "organizer", "label": "Organizer" },
+        { "value": "staff", "label": "Staff / Employee" },
+        { "value": "press", "label": "Press / Media" },
+        { "value": "vip", "label": "VIP" },
+        { "value": "volunteer", "label": "Volunteer" }
+      ]
+    },
+    {
+      "id": "roleColor",
+      "label": "Role colour override",
+      "type": "color",
+      "default": "",
+      "help": "Optional — replaces the status colour. Leave empty to use the colour for the chosen status."
+    },
+    {
+      "id": "background",
+      "label": "Card background",
+      "type": "color",
+      "default": "#0c322c"
+    },
+    {
+      "id": "eventLogo",
+      "label": "Event logo",
+      "type": "asset",
+      "assetType": "any",
+      "allowUpload": true,
+      "help": "Your event's logo. Leave empty to use the SUSE logo (auto light/dark for the card colour)."
+    },
+    {
+      "id": "eventName",
+      "label": "Event name",
+      "type": "text",
+      "default": "",
+      "maxLength": 60,
+      "help": "Shown under the logo. Clear it to show the logo alone."
+    },
+    {
+      "id": "eventWeight",
+      "label": "Event weight",
+      "type": "number",
+      "display": "slider",
+      "min": 100,
+      "max": 800,
+      "step": 100,
+      "default": 600,
+      "help": "Font weight of the event name (100 Thin → 800 ExtraBold)."
+    },
+    {
+      "id": "firstname",
+      "label": "First name",
+      "type": "text",
+      "default": "",
+      "maxLength": 40,
+      "bindToProfile": "firstname"
+    },
+    {
+      "id": "lastname",
+      "label": "Last name",
+      "type": "text",
+      "default": "",
+      "maxLength": 40,
+      "bindToProfile": "lastname"
+    },
+    {
+      "id": "pronouns",
+      "label": "Pronouns",
+      "type": "text",
+      "default": "",
+      "maxLength": 24,
+      "help": "Optional — shown next to the name."
+    },
+    {
+      "id": "nameWeight",
+      "label": "Name weight",
+      "type": "number",
+      "display": "slider",
+      "min": 100,
+      "max": 800,
+      "step": 100,
+      "default": 600,
+      "help": "Font weight of the attendee name (100 Thin → 800 ExtraBold)."
+    },
+    {
+      "id": "jobTitle",
+      "label": "Title",
+      "type": "text",
+      "default": "",
+      "maxLength": 60
+    },
+    {
+      "id": "company",
+      "label": "Company",
+      "type": "text",
+      "default": "",
+      "maxLength": 60
+    },
+    {
+      "id": "tracks",
+      "label": "Tracks",
+      "type": "blocks",
+      "help": "Optional session tracks, shown as chips. Give a chip its own colour, or leave it to use the role colour outline.",
+      "fields": [
+        { "id": "label", "label": "Track", "type": "text", "placeholder": "e.g. Platform Engineering" },
+        { "id": "color", "label": "Chip colour", "type": "color", "default": "" }
+      ],
+      "default": []
+    },
+    {
+      "id": "showQr",
+      "label": "Show QR code",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "id": "url",
+      "label": "QR links to",
+      "type": "url",
+      "default": "https://www.suse.com",
+      "help": "Attendee profile, schedule or contact page. Hidden when empty."
+    }
+  ]
+}

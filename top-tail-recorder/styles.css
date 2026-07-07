@@ -1,0 +1,133 @@
+/* Top & Tail Video. All four layers fill the frame (position:absolute, inset:0) so
+   they read identically in portrait, landscape or square, and so the export
+   compositor (export.renderTopTail) can rasterise each card at the target size and
+   draw the footage object-fit:cover into whatever aspect the frame is. No @keyframes
+   here — the intro/outro/lower-third motion is driven by the compositor at export;
+   the live canvas is a still preview. */
+
+.tt {
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+.tt-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+.tt-layer { position: absolute; inset: 0; }
+
+/* Stacking: outro (1) < intro (2) < body (3) < lower (4). With a clip, the footage
+   covers both cards and the lower-third sits on top; with no clip the (transparent)
+   placeholder lets the intro brand frame show through. */
+.tt-outro { z-index: 1; }
+.tt-intro { z-index: 2; }
+.tt-body  { z-index: 3; }
+.tt-lower { z-index: 4; }
+
+/* ── Brand-frame bookend cards ───────────────────────────── */
+.tt-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tt-brand, #0c322c);
+  color: #fff;
+  text-align: center;
+}
+.tt-card::before {
+  /* thin accent frame inset */
+  content: "";
+  position: absolute;
+  inset: 40px;
+  border: 3px solid var(--tt-accent, #30ba78);
+  border-radius: 18px;
+  opacity: 0.65;
+}
+.tt-card-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 8%;
+  width: 84%;   /* resolved width so percentage children (the logo) don't collapse */
+}
+.tt-logo { width: 56%; height: auto; object-fit: contain; }
+.tt-card-title {
+  font-size: 84px;
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+.tt-card-sub { font-size: 42px; font-weight: 500; opacity: 0.86; }
+.tt-card-cta {
+  margin-top: 6px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  background: var(--tt-accent, #30ba78);
+  color: var(--tt-brand, #0c322c);
+  font-size: 38px;
+  font-weight: 700;
+}
+
+/* ── Body clip ───────────────────────────────────────────── */
+/* No background: the footage fills the frame via object-fit:cover, and with NO clip
+   the transparent body lets the intro brand-frame preview through behind the hint. */
+.tt-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.tt-placeholder {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 8% 10% 11%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+.tt-placeholder-dot {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ef5b5b;
+  box-shadow: 0 0 0 10px rgba(239, 91, 91, 0.18);
+}
+
+/* ── Lower third ─────────────────────────────────────────── */
+.tt-lower {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  pointer-events: none;
+}
+.tt-lower-band {
+  margin: 0 0 12% 8%;
+  padding: 22px 34px;
+  background: rgba(0, 0, 0, 0.55);
+  border-left: 8px solid var(--tt-accent, #30ba78);
+  border-radius: 4px 12px 12px 4px;
+  backdrop-filter: blur(2px);
+  color: #fff;
+  text-align: left;
+  max-width: 84%;
+}
+.tt-lower-name { font-size: 56px; font-weight: 800; line-height: 1.05; }
+.tt-lower-role { font-size: 34px; font-weight: 500; opacity: 0.85; margin-top: 6px; }
+
+/* ── Orientation tweaks ──────────────────────────────────── */
+.tt[data-orientation="landscape"] .tt-card-title { font-size: 96px; }
+.tt[data-orientation="landscape"] .tt-lower-band { margin-bottom: 7%; }
+.tt[data-orientation="square"] .tt-card-title { font-size: 88px; }

@@ -1,0 +1,46 @@
+<div class="tt" data-orientation="{{default orientation 'portrait'}}">
+  <div class="tt-stage" data-toptail data-intro-ms="1600" data-outro-ms="1900" data-lower-ms="2600"
+       data-clip-fit="{{default clipFit 'cover'}}"
+       style="--tt-brand: {{default brandColor '#0c322c'}}; --tt-accent: {{default accent '#30ba78'}};">
+
+    <!-- Intro bookend (brand frame) -->
+    <div class="tt-layer tt-card tt-intro" data-tt="intro">
+      <div class="tt-card-inner">
+        {{#if logo}}<img class="tt-logo" src="{{asset logo}}" alt="">{{/if}}
+        {{#if introTitle}}<div class="tt-card-title">{{introTitle}}</div>{{/if}}
+        {{#if introSubtitle}}<div class="tt-card-sub">{{introSubtitle}}</div>{{/if}}
+      </div>
+    </div>
+
+    <!-- Body: the recorded / uploaded clip, fitted (cover/contain) to the frame -->
+    <div class="tt-layer tt-body">
+      {{#if clip}}
+        <video class="tt-video" data-tt="body" src="{{asset clip}}" style="object-fit:{{default clipFit 'cover'}}" autoplay muted loop playsinline></video>
+      {{else}}
+        <div class="tt-placeholder">
+          <span class="tt-placeholder-dot"></span>
+          <span>Tap ● Warm the camera and mic to set up<br>— or upload a clip in the sidebar.</span>
+        </div>
+      {{/if}}
+    </div>
+
+    <!-- Lower third (only when a name is set) -->
+    {{#if lowerName}}
+    <div class="tt-layer tt-lower" data-tt="lower">
+      <div class="tt-lower-band">
+        <div class="tt-lower-name">{{lowerName}}</div>
+        {{#if lowerRole}}<div class="tt-lower-role">{{lowerRole}}</div>{{/if}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Outro bookend (brand frame) -->
+    <div class="tt-layer tt-card tt-outro" data-tt="outro">
+      <div class="tt-card-inner">
+        {{#if logo}}<img class="tt-logo" src="{{asset logo}}" alt="">{{/if}}
+        {{#if outroTitle}}<div class="tt-card-title">{{outroTitle}}</div>{{/if}}
+        {{#if outroCta}}<div class="tt-card-cta">{{outroCta}}</div>{{/if}}
+      </div>
+    </div>
+  </div>
+</div>

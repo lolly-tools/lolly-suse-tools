@@ -1,0 +1,99 @@
+{
+  "id": "calendar-ics",
+  "name": "Calendar ICS",
+  "description": "Turn event details into a calendar (.ics) file for any calendar app.",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "status": "official",
+  "category": "event",
+  "tags": ["calendar", "ics", "event", "ical", "invite", "meeting", "schedule"],
+  "examples": [
+    { "label": "SUSECON keynote", "values": { "eventName": "SUSECON 2026 Keynote", "meetingTime": "2026-04-14T09:00", "meetingEndTime": "2026-04-14T10:30", "city": "Orlando, FL", "description": "Opening keynote: the open source enterprise.", "url": "https://susecon.com", "reminder": "30" } },
+    { "label": "Kubernetes workshop", "values": { "eventName": "Rancher & Kubernetes Workshop", "meetingTime": "2026-05-06T13:00", "meetingEndTime": "2026-05-06T16:00", "city": "https://meet.suse.com/rancher", "description": "Hands-on lab: deploy and manage clusters with Rancher Prime.", "reminder": "15" } },
+    { "label": "All-day hack day", "values": { "eventName": "Open Source Hack Day", "meetingTime": "2026-06-12T00:00", "allDay": true, "city": "Nuremberg HQ", "description": "Ship something you love. Prizes at 5pm." } },
+    { "label": "Edge AI webinar", "values": { "eventName": "Edge AI Webinar", "meetingTime": "2026-03-18T17:00", "meetingEndTime": "2026-03-18T18:00", "city": "https://webinar.suse.com/edge-ai", "url": "https://webinar.suse.com/edge-ai", "reminder": "60" } },
+    { "label": "Release standup", "values": { "eventName": "SLES 16 Release Standup", "meetingTime": "2026-02-09T10:00", "meetingEndTime": "2026-02-09T10:15", "city": "Zoom", "description": "Daily sync until GA.", "reminder": "5" } },
+    { "label": "Community meetup", "values": { "eventName": "Cloud Native Community Meetup", "meetingTime": "2026-07-23T18:30", "meetingEndTime": "2026-07-23T21:00", "city": "Berlin", "description": "Talks, pizza, and open source.", "reminder": "1440" } }
+  ],
+  "render": {
+    "width": 760,
+    "height": 460,
+    "formats": ["ics", "png", "svg"],
+    "actions": ["download", "copy", "save"]
+  },
+  "hooks": {
+    "onInit": true,
+    "onInput": true
+  },
+  "inputs": [
+    {
+      "id": "eventName",
+      "label": "Event name",
+      "type": "text",
+      "default": "Team meeting",
+      "placeholder": "e.g. Quarterly review",
+      "help": "Shows as the calendar entry's title (SUMMARY)."
+    },
+    {
+      "id": "meetingTime",
+      "label": "Starts",
+      "type": "datetime-local",
+      "default": "",
+      "help": "Local start date and time. Leave blank to default to today. Shared with Meeting Planner so a batch sheet's date column drives both."
+    },
+    {
+      "id": "meetingEndTime",
+      "label": "Ends",
+      "type": "datetime-local",
+      "default": "",
+      "help": "Optional. Leave blank for a 1-hour event."
+    },
+    {
+      "id": "allDay",
+      "label": "All-day event",
+      "type": "boolean",
+      "default": false,
+      "help": "Ignore the time of day and book the whole date."
+    },
+    {
+      "id": "city",
+      "label": "Location",
+      "type": "text",
+      "default": "",
+      "placeholder": "e.g. Nuremberg, or a meeting link",
+      "help": "Where it happens — a place or a URL. Shared id with Meeting Planner (city)."
+    },
+    {
+      "id": "description",
+      "label": "Description",
+      "type": "longtext",
+      "default": "",
+      "placeholder": "Agenda, notes, dial-in details…",
+      "help": "Notes that ride along in the calendar entry."
+    },
+    {
+      "id": "url",
+      "label": "Event URL",
+      "type": "url",
+      "default": "",
+      "placeholder": "https://…",
+      "help": "Optional link attached to the event."
+    },
+    {
+      "id": "reminder",
+      "label": "Reminder",
+      "type": "select",
+      "default": "none",
+      "help": "Add a pop-up alarm before the event starts.",
+      "options": [
+        { "value": "none", "label": "No reminder" },
+        { "value": "5", "label": "5 minutes before" },
+        { "value": "10", "label": "10 minutes before" },
+        { "value": "15", "label": "15 minutes before" },
+        { "value": "30", "label": "30 minutes before" },
+        { "value": "60", "label": "1 hour before" },
+        { "value": "1440", "label": "1 day before" }
+      ]
+    }
+  ]
+}

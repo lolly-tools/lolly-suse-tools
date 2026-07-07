@@ -1,0 +1,67 @@
+{
+  "id": "daily-card",
+  "name": "Day Brief",
+  "description": "Quote of the day with live weather, time and a map for any city.",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "status": "official",
+  "category": "everyone",
+  "tags": ["quote", "weather", "daily", "inspiration"],
+  "examples": [
+    { "label": "Nuremberg · green", "values": { "city": "Nuremberg", "theme": "green" } },
+    { "label": "Tokyo · dark", "values": { "city": "Tokyo", "theme": "dark" } },
+    { "label": "San Francisco · light", "values": { "city": "San Francisco", "theme": "light" } },
+    { "label": "London · dark", "values": { "city": "London", "theme": "dark" } },
+    { "label": "Provo · green", "values": { "city": "Provo", "theme": "green" } },
+    { "label": "Barcelona · light", "values": { "city": "Barcelona", "theme": "light" } }
+  ],
+  "render": {
+    "width": 1080,
+    "height": 1080,
+    "formats": ["png", "jpeg", "svg", "pdf", "pptx"],
+    "actions": ["copy", "download", "save"],
+    "transparentBg": false
+  },
+  "hooks": {
+    "onInit": true,
+    "onInput": true
+  },
+  "inputs": [
+    {
+      "id": "city",
+      "label": "City",
+      "type": "text",
+      "default": "",
+      "help": "Optional. City name, Airport (LAX, LHR), or abbreviation (LA, NYC, SF…)"
+    },
+    {
+      "id": "theme",
+      "label": "Theme",
+      "type": "select",
+      "default": "dark",
+      "options": [
+        { "value": "dark",  "label": "Dark" },
+        { "value": "light", "label": "Light" },
+        { "value": "green", "label": "SUSE Green" }
+      ]
+    },
+    {
+      "id": "quoteWeight",
+      "label": "Quote weight",
+      "type": "number",
+      "display": "slider",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 300,
+      "help": "Font weight of the quote text (100 Thin → 900 Black)."
+    },
+    {
+      "id": "ambientMotion",
+      "label": "Ambient motion",
+      "type": "boolean",
+      "default": false,
+      "help": "A very slow drifting glow behind the card, on screen. Off keeps the exported still clean."
+    }
+  ]
+}
