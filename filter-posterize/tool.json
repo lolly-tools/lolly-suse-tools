@@ -8,14 +8,6 @@
   "category": "designer",
   "tags": ["photo", "filter", "posterize", "posterise", "vector", "trace", "screenprint", "separations", "halftone", "portrait", "headshot", "on-device"],
   "a11yLabel": "{{steps}}-colour posterized vector of the photo",
-  "examples": [
-    { "label": "8-tone separations", "values": { "steps": 8, "contrast": 20 } },
-    { "label": "4-tone bold", "values": { "steps": 4, "contrast": 30 } },
-    { "label": "12-tone smooth", "values": { "steps": 12 } },
-    { "label": "Threshold ink", "values": { "threshold": true, "thresholdLevel": 50 } },
-    { "label": "High threshold negative", "values": { "threshold": true, "thresholdLevel": 65, "invert": true } },
-    { "label": "Jade-tinted 3-tone", "values": { "steps": 3, "contrast": 40, "saturation": 130, "treatmentColor": "#30ba78", "blendMode": "overlay", "treatmentIntensity": 35 } }
-  ],
   "render": {
     "width": 1080,
     "height": 1080,

@@ -24,7 +24,8 @@
  * band's mean colour, so a tonally flat source (the Geeko on a solid dark-green
  * field) separates into fewer, closer tones than a photo would; high-contrast
  * PHOTOS (cf. tool.json: "Headshots and high-contrast photos trace best") still
- * give the richest separations.
+ * give the richest separations. (The illustrative gallery preview — a Warhol grid
+ * of a posterized portrait — is committed at tools/filter-posterize/card.svg.)
  */
 
 // A Lolly tool URL (bag-video → PNG), resolved via host.compose.renderUrl — matches
