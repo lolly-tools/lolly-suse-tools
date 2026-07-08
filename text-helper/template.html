@@ -1,10 +1,10 @@
 <div class="tt" data-tt>
-  <header class="tt-top">
-    <h1 class="tt-title">Text Helper</h1>
-    <p class="tt-sub">Format, decode and hash text right here. Nothing you paste leaves your device.</p>
-  </header>
+  <button class="tt-hamburger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="tt-tabs-menu" aria-label="Open operations menu" data-tt-hamburger>
+    <span></span><span></span><span></span>
+  </button>
 
-  <nav class="tt-tabs" role="tablist" aria-label="Operation">
+  <nav class="tt-tabs" id="tt-tabs-menu" role="tablist" aria-label="Operation">
+    <button class="tt-info-btn" type="button" aria-haspopup="dialog" aria-label="About Text Helper" data-tt-about-open>Tt</button>
     <button class="tt-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="tt-result-panel" data-op="text">Text</button>
     <button class="tt-tab" type="button" role="tab" aria-selected="false" aria-controls="tt-result-panel" data-op="json">JSON</button>
     <button class="tt-tab" type="button" role="tab" aria-selected="false" aria-controls="tt-result-panel" data-op="yaml">YAML</button>
@@ -16,6 +16,17 @@
     <button class="tt-tab" type="button" role="tab" aria-selected="false" aria-controls="tt-result-panel" data-op="deident">De-identify</button>
     <button class="tt-tab" type="button" role="tab" aria-selected="false" aria-controls="tt-result-panel" data-op="novelty">Novelty</button>
   </nav>
+
+  <div class="tt-about-overlay" data-tt-about hidden>
+    <div class="tt-about" role="dialog" aria-modal="true" aria-labelledby="tt-about-title" aria-describedby="tt-about-desc">
+      <button class="tt-about-close" type="button" data-tt-about-close aria-label="Close">&times;</button>
+      <div class="tt-about-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" /><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" /></svg>
+      </div>
+      <h2 class="tt-about-title" id="tt-about-title">Text Helper</h2>
+      <p class="tt-about-desc" id="tt-about-desc">Format, decode and hash text right here. Nothing you paste leaves your device.</p>
+    </div>
+  </div>
 
   <div class="tt-options" data-tt-options></div>
 
@@ -72,26 +83,173 @@
   gap: 16px;
 }
 .tt * { box-sizing: border-box; }
-.tt-top { max-width: 760px; margin: 0 auto; text-align: center; }
-.tt-title { margin: 0 0 4px; font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -0.01em; }
-.tt-sub { margin: 0; font-size: 14px; color: hsl(var(--tt-muted)); }
 
-.tt-tabs { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+/* One seamless pill: the CONTAINER owns the border/radius/clip, buttons sit flush
+   with no gap. Single row -> width:fit-content hugs the content exactly, so the
+   clip rounds only the true leftmost/rightmost buttons (a real pill). Once the
+   row is too wide to fit, the container is forced to 100% width and flex-wrap
+   drops extra tabs to new lines *inside* the same clipped, rounded box — i.e. the
+   whole group stays encapsulated as one pill/capsule instead of scattering into
+   many separate floating pills. */
+.tt-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  border: 1px solid hsl(var(--tt-bd));
+  border-radius: 999px;
+  overflow: hidden;
+  background: hsl(var(--tt-card));
+}
+.tt-info-btn {
+  appearance: none;
+  border: none;
+  border-right: 1px solid hsl(var(--tt-bd) / .6);
+  background: hsl(var(--tt-fill));
+  color: hsl(var(--tt-fg));
+  font: inherit;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.tt-info-btn:hover { background: hsl(var(--tt-brand) / .16); color: hsl(var(--tt-brand)); }
 .tt-tab {
   appearance: none;
-  border: 1px solid hsl(var(--tt-bd));
-  background: hsl(var(--tt-card));
+  border: none;
+  border-right: 1px solid hsl(var(--tt-bd) / .6);
+  background: transparent;
   color: hsl(var(--tt-muted));
   font: inherit;
   font-weight: 600;
   font-size: 13.5px;
   padding: 8px 16px;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.tt-tab:last-child { border-right: none; }
+.tt-tab:hover { color: hsl(var(--tt-brand)); }
+.tt-tab.is-active { background: hsl(var(--tt-brand)); color: hsl(var(--tt-brandfg)); }
+.tt-info-btn:focus-visible, .tt-tab:focus-visible { outline: 2px solid hsl(var(--tt-brand)); outline-offset: -2px; }
+
+/* Mobile: the pill has nowhere good to wrap to, so it collapses behind a
+   hamburger instead — same tab buttons, no duplicate markup or click wiring,
+   just re-flowed into a top-right dropdown list toggled by .is-open (JS). */
+.tt-hamburger {
+  display: none;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 130;
+  width: 40px;
+  height: 40px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid hsl(var(--tt-bd));
+  border-radius: 10px;
+  background: hsl(var(--tt-card));
+  cursor: pointer;
+  box-shadow: 0 4px 12px hsl(var(--tt-fg) / .12);
+}
+.tt-hamburger span { display: block; width: 18px; height: 2px; border-radius: 2px; background: hsl(var(--tt-fg)); transition: transform .16s, opacity .16s; }
+.tt-hamburger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.tt-hamburger.is-open span:nth-child(2) { opacity: 0; }
+.tt-hamburger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 760px) {
+  .tt-hamburger { display: flex; }
+  .tt-tabs {
+    position: fixed;
+    top: 64px;
+    right: 16px;
+    left: auto;
+    width: 220px;
+    max-width: calc(100vw - 32px);
+    margin: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    border-radius: 14px;
+    box-shadow: 0 16px 40px hsl(var(--tt-fg) / .22);
+    z-index: 125;
+    max-height: calc(100vh - 84px);
+    overflow-y: auto;
+    transform-origin: top right;
+    transform: scale(.95) translateY(-4px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .14s ease, transform .14s ease, visibility .14s;
+  }
+  .tt-tabs.is-open { opacity: 1; transform: scale(1) translateY(0); visibility: visible; pointer-events: auto; }
+  .tt-info-btn, .tt-tab {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 14px;
+    border-right: none;
+    border-bottom: 1px solid hsl(var(--tt-bd) / .5);
+  }
+  .tt-tab:last-child { border-bottom: none; }
+}
+
+.tt-about-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: hsl(var(--tt-fg) / .45);
+}
+.tt-about-overlay[hidden] { display: none; }
+.tt-about {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  background: hsl(var(--tt-card));
+  border: 1px solid hsl(var(--tt-bd));
+  border-radius: 16px;
+  padding: 28px 24px 24px;
+  text-align: center;
+  box-shadow: 0 20px 50px hsl(var(--tt-fg) / .25);
+}
+.tt-about-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: hsl(var(--tt-muted));
+  font-size: 20px;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background .12s, color .12s, border-color .12s;
 }
-.tt-tab:hover { border-color: hsl(var(--tt-brand)); color: hsl(var(--tt-brand)); }
-.tt-tab.is-active { background: hsl(var(--tt-brand)); border-color: hsl(var(--tt-brand)); color: hsl(var(--tt-brandfg)); }
+.tt-about-close:hover { background: hsl(var(--tt-fill)); color: hsl(var(--tt-fg)); }
+.tt-about-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: hsl(var(--tt-brand) / .12);
+  color: hsl(var(--tt-brand));
+}
+.tt-about-icon svg { width: 26px; height: 26px; }
+.tt-about-title { margin: 0 0 6px; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+.tt-about-desc { margin: 0; font-size: 13.5px; line-height: 1.5; color: hsl(var(--tt-muted)); }
 
 .tt-options { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 18px; min-height: 20px; }
 .tt-options:empty { display: none; }
@@ -193,6 +351,10 @@
   var copyBtn = root.querySelector('[data-tt-copy]');
   var inLabel = root.querySelector('[data-tt-inlabel]');
   var tabs = Array.prototype.slice.call(root.querySelectorAll('.tt-tab'));
+  var aboutBtn = root.querySelector('[data-tt-about-open]');
+  var aboutOverlay = root.querySelector('[data-tt-about]');
+  var aboutClose = root.querySelector('[data-tt-about-close]');
+  var hamburgerBtn = root.querySelector('[data-tt-hamburger]');
 
   var activeOp = 'text';
   var state = {
@@ -848,7 +1010,7 @@
   }
   tabs.forEach(function (tab) {
     tab.tabIndex = tab.classList.contains('is-active') ? 0 : -1; // initial roving state
-    tab.addEventListener('click', function () { activateTab(tab, false); });
+    tab.addEventListener('click', function () { activateTab(tab, false); closeMobileMenu(); });
   });
   // ARIA tabs keyboard pattern: ←/→ (and ↑/↓) move + activate, Home/End jump.
   var tablistEl = root.querySelector('.tt-tabs');
@@ -864,6 +1026,58 @@
     e.preventDefault();
     activateTab(tabs[next], true);
   });
+
+  // ── mobile hamburger — the pill collapses into this toggled dropdown list ───
+  function closeMobileMenu() {
+    if (!tablistEl || !tablistEl.classList.contains('is-open')) return;
+    tablistEl.classList.remove('is-open');
+    if (hamburgerBtn) { hamburgerBtn.classList.remove('is-open'); hamburgerBtn.setAttribute('aria-expanded', 'false'); }
+    document.removeEventListener('click', onOutsideMenuClick, true);
+    document.removeEventListener('keydown', onMenuKeydown);
+  }
+  function openMobileMenu() {
+    if (!tablistEl) return;
+    tablistEl.classList.add('is-open');
+    if (hamburgerBtn) { hamburgerBtn.classList.add('is-open'); hamburgerBtn.setAttribute('aria-expanded', 'true'); }
+    document.addEventListener('click', onOutsideMenuClick, true);
+    document.addEventListener('keydown', onMenuKeydown);
+  }
+  function onOutsideMenuClick(e) {
+    if (tablistEl.contains(e.target) || (hamburgerBtn && hamburgerBtn.contains(e.target))) return;
+    closeMobileMenu();
+  }
+  function onMenuKeydown(e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeMobileMenu(); if (hamburgerBtn) hamburgerBtn.focus(); }
+  }
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', function () {
+      if (tablistEl.classList.contains('is-open')) closeMobileMenu(); else openMobileMenu();
+    });
+  }
+
+  // ── about modal — click, backdrop click, or Esc all close it ────────────────
+  var aboutLastFocus = null;
+  function onAboutKeydown(e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeAbout(); }
+  }
+  function openAbout() {
+    closeMobileMenu();
+    aboutLastFocus = document.activeElement;
+    aboutOverlay.hidden = false;
+    aboutClose.focus();
+    document.addEventListener('keydown', onAboutKeydown);
+  }
+  function closeAbout() {
+    aboutOverlay.hidden = true;
+    document.removeEventListener('keydown', onAboutKeydown);
+    if (aboutLastFocus && typeof aboutLastFocus.focus === 'function') aboutLastFocus.focus();
+  }
+  if (aboutBtn && aboutOverlay && aboutClose) {
+    aboutBtn.addEventListener('click', openAbout);
+    aboutClose.addEventListener('click', closeAbout);
+    aboutOverlay.addEventListener('click', function (e) { if (e.target === aboutOverlay) closeAbout(); });
+  }
+
   inEl.addEventListener('input', run);
   copyBtn.addEventListener('click', function () {
     if (!outEl.value) return;
